@@ -1,0 +1,212 @@
+<div class="grpTitle">
+    <span (click)="cancel()" class="dispGrpSpan">Display Group </span> > Display Schedule
+</div>
+
+<mat-card class="groupCard">
+    <div class="grpDetail">
+        <span class="labelDtl">Group ID : </span> 
+        <span class="valueDtl">{{schedule && schedule.Header && schedule.Header.getGRPID()}} </span> 
+        <span class="copytoclipboard" data-toggle="tooltip" (click)="copyToClip($event)">
+           <img src="../../../../assets/images/paste.svg">
+         </span>  
+        <span class="labelDtl">Version : </span> 
+        <span class="valueDtl">{{schedule && schedule.Header && schedule.Header.getVerNum()}} </span> 
+        <span class="grpIndex" [class.activeGrp]="activeGrp == 'Active'">&nbsp;</span>
+        <span class="labelDtl">Flight : </span>  
+        <span class="valueDtl">{{flightNumber}} </span>
+        </div>
+    <span class="example-spacer"></span>
+ 
+    <!-- <table class="formTable">
+        <tr>
+            <td>
+                <span class="label">PSC Action</span>
+            </td>
+            <td>
+               <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.PSCAction"/>
+            </td>
+            <td>
+                <span class="label">Sch Eff Date</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.SchEffDate"/>
+             </td>
+            <td>
+                <span class="label">Arrival City</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.ArrivalCity"/>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="label">Time Mode</span>
+            </td>
+            <td>
+               <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.TimeMode"/>
+            </td>
+            <td>
+                <span class="label">Sch Dis Date</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.SchDisDate"/>
+             </td>
+            <td>
+                <span class="label">Aircraft STA</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.AircraftSTA"/>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="label">Creator Ref</span>
+            </td>
+            <td>
+               <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.CreAgntID"/>
+            </td>
+            <td>
+                <span class="label">Sch Frequency</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.SchFrequency"/>
+             </td>
+            <td>
+                <span class="label">Pax STA</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.PaxSTA"/>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="label">Airline CC</span>
+            </td>
+            <td>
+               <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.AirlineCC"/>
+            </td>
+            <td>
+                <span class="label">Frequency Rate</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.FreqRate"/>
+             </td>
+            <td>
+                <span class="label">Meal Ser Note</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.EqpSerType"/>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="label">Flight Number</span>
+            </td>
+            <td>
+               <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.FltNum"/>
+            </td>
+            <td>
+                <span class="label">Departure City</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.DepartureCity"/>
+             </td>
+            <td>
+                <span class="label">DEI Information</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.DEIInformation"/>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="label">Operation Suffix</span>
+            </td>
+            <td>
+               <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.OperationalSuffix"/>
+            </td>
+            <td>
+                <span class="label">Aircraft STD</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.AircraftSTD"/>
+             </td>
+            <td>
+            </td>
+            <td>
+             </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="label">Leg Seq Number</span>
+            </td>
+            <td>
+               <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.LegSeqNum"/>
+            </td>
+            <td>
+                <span class="label">Pax STD</span>
+            </td>
+            <td>
+                <input type="text" class="txtBox" [(ngModel)]="scheduleData && scheduleData.PaxSTD"/>
+             </td>
+            <td>
+            </td>
+            <td>
+             </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+             </td>
+            <td>
+                 
+            </td>
+            <td>
+                <button class="cancelBtn" (click)="cancel()" >
+                    Cancel
+                </button>
+                <button class="saveBtn" >
+                    Save
+                </button>
+             </td>
+        </tr>
+    </table> -->
+
+
+<!-- //Airline details code Begin -->
+<div *ngIf="scheduleData && deiSchedule">
+    <app-airline-details></app-airline-details>
+</div>
+<div *ngIf="!scheduleData"></div>
+<!-- //Airline details code End -->
+
+
+    <!--     
+    Time Mode
+    Creation Ref
+    Airline CC
+    Flight Number
+    Operational Suffix
+    Leg Seq Number
+
+
+    Sch Eff Date
+    Sch Dis Date
+    Sch Frequency
+    Departure City
+    Aircraft STD
+    PAX STD
+
+    Arrival City
+    Aircraft STA
+    PAX STA
+    Meal Ser Note
+    DEI Information
+ -->
+
+</mat-card>

@@ -1,0 +1,49 @@
+@import '../../../node_modules/@angular/material/menu/menu-theme';
+.menuContainer {
+    padding: 20px;
+    text-align: center;
+    display: block;
+    padding-top: 0px;
+}
+
+.menu {
+    color: #0D3050;
+    font-size: 18px;
+    font-family: "Lato";
+    background-color: #ffffff;
+    width: 210px;
+    border: none;
+    height: 30px;
+    display: inline-flex;
+    outline: none;
+    margin: 0.5px;
+    padding-top: 5px;
+}
+
+.submenu {
+    color: #000000;
+    font-size: 16px;
+    font-family: "Lato";
+    background-color: #ffffff;
+}
+
+.submenudivider {
+    height: 2px;
+    padding: 0px;
+}
+
+.selectedMenu {
+    color: #ffffff;
+    font-size: 18px;
+    font-family: "Lato Medium";
+    background-color: #0361aa;
+}
+
+.menu i.material-icons {
+    font-size: 18px;
+    padding-right: 20px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}

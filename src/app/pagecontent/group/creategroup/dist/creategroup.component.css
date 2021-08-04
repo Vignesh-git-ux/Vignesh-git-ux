@@ -1,0 +1,17 @@
+table {
+  width: 100%;
+}
+
+.selectedGroup {
+  background-color: #add8e6;
+}
+
+.errorMsg {
+  color: #f00;
+  flex-flow: column;
+}
+
+.grpTable {
+  padding: 0px 100px;
+  background: none;
+}

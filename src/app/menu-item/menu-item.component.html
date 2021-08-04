@@ -1,0 +1,25 @@
+<ng-container *ngFor="let item of items">
+    <div *ngIf="item.subMenus else elseTemp">
+        <button mat-menu-item class="submenu" [disabled]="item.isDisabled" [class.submenudivider]="!item.menuLinkText" [matMenuTriggerFor]="subMenu">
+        <span *ngIf="item.menuLinkText; else divider">
+            <span *ngIf="item.routerLink && item.routerLink.length != 0" routerLink="{{item.routerLink}}">{{item.menuLinkText}}</span>
+            <span *ngIf="!item.routerLink || item.routerLink.length == 0">{{item.menuLinkText}}</span>
+        </span>
+    </button>
+        <mat-menu #subMenu="matMenu">
+            <app-menu-item [items]=" item.subMenus "></app-menu-item>
+        </mat-menu>
+    </div>
+    <ng-template #elseTemp>
+        <button mat-menu-item class="submenu" [disabled]="item.isDisabled" [class.submenudivider]="!item.menuLinkText">
+            <span *ngIf="item.menuLinkText; else divider"> 
+                <span *ngIf="item.routerLink && item.routerLink.length != 0" routerLink="{{item.routerLink}}">{{item.menuLinkText}}</span>
+                <span *ngIf="!item.routerLink || item.routerLink.length == 0">{{item.menuLinkText}}</span>
+            </span>
+        </button>
+    </ng-template>
+    <ng-template #divider>
+        <mat-divider></mat-divider>
+    </ng-template>
+
+</ng-container>

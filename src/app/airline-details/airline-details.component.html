@@ -1,0 +1,295 @@
+
+<div class="col-12">
+    <div class="switch-tabs">               
+        <div class="background-white">
+          <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li class="nav-list" [ngbNavItem]="1">
+              <div class="skewednavbar"><a active ngbNavLink><div class="skewedtext">Flight</div></a></div>          
+              <ng-template ngbNavContent>
+                  <form [formGroup]="flightForm" id="flightForm" (ngSubmit)="onSubmit()" >
+                  <div class="form-border">                    
+                  <div class="airline-form1">
+                  <div class="row">
+                    <div class="col-6" id="leftformpart1">
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="PSCAction" class="form-label">PSC Action</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="PSCAction"  formControlName="PSCAction"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="AirlineCC" class="form-label">Airline CC</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="AirlineCC"  formControlName="AirlineCC"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="FltNum" class="form-label">Flight Number</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="FltNum" formControlName="FltNum"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="DepartureCity" class="form-label">Departure City</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="DepartureCity" formControlName="DepartureCity"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6" id="rightformpart1">
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="SchEffDate" class="form-label">Sch Eff Date</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="SchEffDate" formControlName="SchEffDate"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="SchDisDate" class="form-label">Sch Dis Date</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="SchDisDate" formControlName="SchDisDate"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="SchFrequency" class="form-label">Sch Frequency</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="SchFrequency" formControlName="SchFrequency"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-3">
+                          <label for="ArrivalCity" class="form-label">Arrival City</label>
+                        </div>
+                        <div class="col-8">
+                          <input type="text" class="form-control" id="ArrivalCity" formControlName="ArrivalCity"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  </div>                 
+                </form>
+                </ng-template>
+              </li>
+              <li class="nav-list" [ngbNavItem]="2">
+                <div class="skewednavbar"><a ngbNavLink><div class="skewedtext">Segment</div></a></div>
+                <ng-template ngbNavContent>
+                  <form [formGroup]="segmentForm" id="segmentForm" (ngSubmit)="onSubmit()" >
+                  <div class="form-border">
+                  <div class="airline-form2">
+                  <div class="row">
+                    <div class="col-6" id="leftformpart2">
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="TimeMode" class="form-label">Time Mode</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="TimeMode" formControlName="TimeMode"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="aircraftstd" class="form-label">Aircraft STD</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="aircraftstd" formControlName="aircraftstd"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="paxstd" class="form-label">Pax STD</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="paxstd" formControlName="paxstd"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="deptimevarfromutc" class="form-label">DepTimeVarFromUTC</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="deptimevarfromutc" formControlName="deptimevarfromutc"/>
+                          <!-- <div class="form-group row">
+                            <div class="input-group"> -->
+                              <!-- <ngb-datepicker #dp [(ngModel)]="model" formControlName="deptimevarfromutc" (navigate)="date = $event.next"></ngb-datepicker> -->
+                              <!-- <input class="form-control" placeholder="yyyy-mm-dd"                                     
+                                     name="dp" formControlName="deptimevarfromutc" ngbDatepicker #d="ngbDatepicker"> -->
+                              <!-- <input class="form-control-date" placeholder="yyyy-mm-dd"                                     
+                                     name="dp"  formControlName="deptimevarfromutc" ngbDatepicker #d="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-secondary-date calendar" (click)="d.toggle()" type="button"></button>
+                              </div>
+                            </div>
+                          </div> -->
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="arrtimevarfromutc" class="form-label">ArrTimeVarFromUTC</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="arrtimevarfromutc" formControlName="arrtimevarfromutc"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="inflightadj" class="form-label">In Flight Adj</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="inflightadj" formControlName="inflightadj"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="eqpsertype" class="form-label">Eqp Ser Type</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="eqpsertype" formControlName="eqpsertype"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6" id="rightformpart2">
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="FreqRate" class="form-label">Frequency Rate</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="FreqRate" formControlName="FreqRate"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="aircraftsta" class="form-label">Aircraft STA</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="aircraftsta" formControlName="aircraftsta"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="paxsta" class="form-label">Pax STA</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="paxsta" formControlName="paxsta"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="depterminal" class="form-label">Dep Terminal</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="depterminal" formControlName="depterminal"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="arrterminal" class="form-label">Arr Terminal</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="arrterminal" formControlName="arrterminal"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="aircraftconfig" class="form-label">Aircraft config</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="aircraftconfig" formControlName="aircraftconfig"/>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-4">
+                          <label for="aircrafttype" class="form-label">Aircraft Type</label>
+                        </div>
+                        <div class="col-7">
+                          <input type="text" class="form-control1" id="aircrafttype" formControlName="aircrafttype"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  </div>
+                </form>
+                </ng-template>
+              </li>
+              <li class="nav-list" [ngbNavItem]="3">
+                <div class="skewednavbar"><a ngbNavLink><div class="skewedtext">DEI</div></a></div>
+                <ng-template ngbNavContent>
+                  <div class="background-grey">
+                      <div class="form-border3">
+                        <div class="airline-form3">                    
+                      <div class="row">                                            
+                      <div class="col-6"><span class="pad0">DEI</span></div>
+                      <div class="col-4"><span class="pad0">DEI Text</span></div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">                                                     
+                          <ng-multiselect-dropdown [placeholder]="'Search DEI'" [settings]="dropdownSettings" [data]="dropdownList"
+                            [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"></ng-multiselect-dropdown>
+                        </div>                       
+                        <div class="col-4"> 
+                          <div class="coltextarea">                            
+                            <div class="row">                              
+                                <textarea id="textarea" [(ngModel)]="deiText" rows="3"></textarea>                                                          
+                            <button class="btn btn-primary float-right" (click)="addDEITextToTable()" type="submit">Add</button>
+                            </div>                          
+                          </div>
+                        </div>
+                      </div>
+                        </div>                      
+                        <div class="deiTable">
+                          <table class="table table-striped" data-click-to-select="true">
+                            <thead>
+                              <tr>                          
+                                <th scope="col" class="tableHeader">SL NO</th>
+                                <th scope="col" class="tableHeader" data-checkbox="true">DEI</th>
+                                <th scope="col" class="tableHeader">DEI Text</th>
+                                <th scope="col" class="tableHeader"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor = "let rowData of DEITableData; index as i ">     
+                                <td class="tdwidth">{{i+1}}</td>                         
+                                <td>{{rowData.DEI}}</td>                                                                                            
+                                                                     
+                                    <!-- <td *ngIf="rowData.id === EditRowId && showBox"  (clickOutside)="onClickedOutside($event)" ><div class="row"><input type="text"  class="form-control2" [(ngModel)]="updatedData"><span class="updateRowData" (click)="onEnterUpdatedData(rowData.id,i)"><span class="grpIndex2"><img src="../../assets/images/check.svg"></span> </span></div></td> -->
+                                    <td *ngIf="rowData.id === EditRowId && showBox"  (clickOutside)="onClickedOutside($event)" ><div class="row"><input type="text"  class="form-control2" [(ngModel)]="updatedData"><span class="updateRowData" (click)="onEnterUpdatedData(rowData.id,i)"><span class="grpIndex2">Save</span> </span></div></td>
+                                <!-- <td *ngIf="rowData.key === EditRowId && showBox"  (clickOutside)="onClickedOutside($event)" ></td> -->
+                                <td *ngIf="rowData.id !== EditRowId" (dblclick)="Edit(rowData.id,i)"><span>{{rowData.DEIText}}</span></td>                                
+                                <td>
+                                  <div class="button-align1">
+                                    <button class=" btn-light1 float-right" (click)="deleteRowData(rowData)" type="submit">Delete</button>  
+                                    <span class="grpIndex2"><img src="../../assets/images/red-circle.svg"></span>                                  
+                                </div> 
+                                </td>                                                               
+                              </tr>                              
+                            </tbody>
+                          </table>                        
+                        </div>                      
+                      </div>
+                  </div>
+                </ng-template>
+              </li>
+            </ul>
+          </div>
+          <div [ngbNavOutlet]="nav" class="background-white"></div>          
+          <!-- </div> -->
+        </div>
+              <div class="button-align">
+                <button class="btn btn-light float-right" (click)="resetForm()" type="submit">Cancel</button>
+                <button class="btn btn-primary float-right" (click)="onSubmit()" type="submit">Save</button>
+            </div> 
+    </div>  

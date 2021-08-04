@@ -1,0 +1,125 @@
+.grpTitle {
+    color : #196fb1;
+    font-family: 'Lato';
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 20px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+.errorMsg {
+    color: #f00;
+    flex-flow: column;
+}
+img{    
+    height: 12px;
+    width: 12px;
+    margin-top: 15px;
+    margin-right: 40px;
+    margin-left: 20px;
+    color: #196fb1;
+  }
+  img:hover{
+    height: 15px;
+    width: 15px;
+    margin-top: 7px;
+    margin-right: 37px;
+    margin-left: 20px;
+
+    color: #196fb1;
+  }
+  
+.groupCard {
+    background-color: white;
+    margin-left: 20px;
+    font-family: "Lato";
+    margin-right: 20px;
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+.grpDetail {
+    padding: 0px 10px 0px 10px;
+    height: 40px;
+    color: #0d3050;
+    font-size: 14px;
+    background: #D5d5d5;
+    display: inline-flex;
+    font-family: 'Lato';
+    font-weight: bold;
+}
+.dispGrpSpan {
+    cursor: pointer;
+}
+.labelDtl {
+    padding-top: 10px;
+    padding-left: 40px;
+    font-size: 16px;
+}
+.valueDtl {
+    padding-top: 12px;
+    padding-left: 40px;
+    font-weight: normal;
+}
+.formTable {
+    padding-top: 15px;
+    font-family: 'Lato';
+    color: #f5f5f5;
+    width: 100%;
+}
+.formTable td {
+    font-size: 14px;
+    color: #000000;
+}
+.formTable td input {
+    background: #c9c9c9;
+    width: 197px;
+    height: 25px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+.formTable tr {
+    height : 56px;
+}
+.cancelBtn {
+    margin-left: 20px;
+    color: #0361aa;
+    background: none;
+    display: inline-flex;
+    height: 24px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Lato';
+    font-weight: bold;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+}
+.saveBtn {
+    margin-left: 20px;
+    font-family: 'Lato';
+    font-weight: bold;
+    font-size: 15px;
+    color: #ffffff;
+    background: #196fb1;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    height: 25px;
+    width: 80px;
+}
+
+.grpIndex {
+    background: red;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    border: 1px #333 solid;
+    margin-top: 13px;
+    margin-left: 10px;
+}
+
+.activeGrp {
+    background: springgreen;
+}

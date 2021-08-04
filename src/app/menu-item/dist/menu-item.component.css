@@ -1,0 +1,29 @@
+.submenu {
+  color: #000000;
+  font-size: 16px;
+  font-family: "Lato";
+  background-color: #ffffff;
+}
+
+.submenu span {
+  outline: none;
+}
+
+.submenudivider {
+  height: 2px;
+  padding: 0px;
+}
+
+i.material-icons {
+  font-size: 18px;
+  padding-right: 20px;
+  vertical-align: middle;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-menu-item[disabled] {
+  opacity: 0.5;
+}

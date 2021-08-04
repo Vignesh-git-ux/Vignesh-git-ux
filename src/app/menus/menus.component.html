@@ -1,0 +1,15 @@
+<mat-card-content class="menuContainer">
+
+    <ng-container *ngFor="let item of menus">
+        <button class="menu" [class.selectedMenu]="item==selectedMenu" (click)="openMatMenu(item)" [matMenuTriggerFor]="subMenu">
+            <span>{{ item.menuLinkText }}</span>
+            <span class="example-spacer"></span>
+            <i class="material-icons">arrow_drop_down</i>
+        </button>
+
+        <mat-menu #subMenu="matMenu">
+            <app-menu-item #clickmenu [items]="item.subMenus"></app-menu-item>
+        </mat-menu>
+
+    </ng-container>
+</mat-card-content>

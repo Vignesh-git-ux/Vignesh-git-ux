@@ -1,0 +1,102 @@
+[{
+        "id": "BuildSchedulesList",
+        "menuLinkText": "Build Schedules",
+        "isDisabled": false,
+        "subMenus": [{
+                "id": "PreviousScheduleBuild",
+                "menuLinkText": "Previous Schedule Build",
+                "isDisabled": false
+            },
+            {
+                "id": "",
+                "menuLinkText": "",
+                "isDisabled": false
+            },
+            {
+                "id": "Prepare",
+                "menuLinkText": "Prepare",
+                "isDisabled": false
+            },
+            {
+                "id": "SimulateCancelOrNew",
+                "menuLinkText": "Simulate Cancel/New",
+                "isDisabled": false
+            },
+            {
+                "id": "InitializeSimulation",
+                "menuLinkText": "Initialize Simulation",
+                "isDisabled": false
+            },
+            {
+                "id": "Logs",
+                "menuLinkText": "Logs",
+                "isDisabled": true
+            },
+            {
+                "id": "Review",
+                "menuLinkText": "Review",
+                "isDisabled": false
+            },
+            {
+                "id": "",
+                "menuLinkText": "",
+                "isDisabled": false
+            },
+            {
+                "id": "ViewScheduleGroup",
+                "menuLinkText": "View Schedule Group",
+                "isDisabled": false,
+                "subMenus": [{
+                        "id": "MyGroup",
+                        "menuLinkText": "My Groups",
+                        "isDisabled": false,
+                        "routerLink": "/scmlanding/listGrps/MY"
+                    },
+                    {
+                        "id": "AllGroup",
+                        "menuLinkText": "All Groups",
+                        "isDisabled": false,
+                        "routerLink": "/scmlanding/listGrps/ALL"
+                    },
+                    {
+                        "id": "DispGroup",
+                        "menuLinkText": "Display Group",
+                        "isDisabled": false,
+                        "routerLink": "/scmlanding/dispgrp"
+                    }
+                ]
+            },
+            {
+                "id": "CreateGroup",
+                "menuLinkText": "Create Group",
+                "isDisabled": false
+
+            },
+            {
+                "id": "Queues",
+                "menuLinkText": "Queues",
+                "isDisabled": false
+            }
+        ]
+    },
+    {
+        "menuLinkText": "Run Simulations",
+        "isDisabled": false,
+        "id": "RunSimulationsList"
+    },
+    {
+        "menuLinkText": "View Reports",
+        "isDisabled": false,
+        "id": "ViewReportsList"
+    },
+    {
+        "menuLinkText": "Pre-compute Status",
+        "isDisabled": false,
+        "id": "Pre-computeStatusList"
+    },
+    {
+        "menuLinkText": "Send Solution File",
+        "isDisabled": false,
+        "id": "SendSolutionFileList"
+    }
+]

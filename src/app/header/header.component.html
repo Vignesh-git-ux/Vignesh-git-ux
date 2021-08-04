@@ -1,0 +1,16 @@
+<mat-toolbar class="titlebar">
+
+    <img src="../assets/images/copalogomain_XL.svg" class="appicon" routerLink="/scmlanding"/>
+
+    <div class="example-spacer pageheading">{{title}}</div>
+    
+    <span>Welcome {{user.AgentFirstName}} {{user.AgentLastName}}</span>
+    
+    <div class="useravtr" (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+      <img src="{{user.ProfilePhoto}}" class=""/>
+    </div>
+
+    <ng-template  cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isOpen">
+        <app-useroverlay></app-useroverlay>
+    </ng-template>
+</mat-toolbar>

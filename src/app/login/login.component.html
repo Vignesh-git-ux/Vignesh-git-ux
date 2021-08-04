@@ -1,0 +1,48 @@
+<div class="form-container">
+    <mat-grid-list cols="3" rowHeight="100%">
+        <mat-grid-tile>
+            <div class="login ">
+                <img src="../../assets/images/copalogomain_XL.svg" />
+                <div class="pageheading">{{title}}</div>
+                <div class="pageheading">Login</div>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="formfield">
+                        <input formControlName="userName" id="userName" type="text" class="form-control" placeholder="Agent ID/Agenent Sine/Airport Code/Duty Code" required>
+                        <i class="material-icons">person</i>
+                    </div>
+                    <div *ngIf="submitted && f.userName.invalid" class="alert alert-danger">
+
+                        <div *ngIf="f.userName.errors && f.userName.errors.required">User Name is required.</div>
+
+                    </div>
+                    <div class="formfield">
+                        <input formControlName="password" id="password" type="password" class="form-control" placeholder="Password" required>
+                        <i class="material-icons">https</i>
+
+                    </div>
+                    <div *ngIf="submitted && f.password.invalid" class="alert alert-danger">
+
+                        <div *ngIf="f.password.errors && f.password.errors.required">Email is required.</div>
+
+
+                    </div>
+                    
+                    <button mat-raised-button color="primary" type="submit" class="loginbtn">
+                       <span> Login</span>
+                    </button>
+                    <div *ngIf="submitted && invalid" class="alert alert-danger">
+
+                        <div>{{errorMsg}}</div>
+
+                    </div>
+                </form>
+
+                <div class="forgetpwd">Forget Password?</div>
+                <div class="copyright">@2021 Mphasis The Next Applied. All Rights Reserved</div>
+            </div>
+        </mat-grid-tile>
+
+
+    </mat-grid-list>
+
+</div>

@@ -1,0 +1,56 @@
+<mat-card class="overlayCard">
+    <div class="ctrDiv">
+
+    <div class="ctrDiv2">
+        <div class="useravtr">
+            <img src="{{user.ProfilePhoto}}" class=""/>
+            <div class="iconSpan">
+            <span class="material-icons">
+                photo_camera
+            </span>
+        </div>
+        </div>
+    </div>
+</div>
+    <div class="emailDiv">{{user.Mailid}}</div>
+    <table>
+        <tr>
+            <td>
+                Agent ID
+            </td>
+            <td>:</td>
+            <td>{{user.AgentID}}</td>
+        </tr>
+        <tr>
+            <td>
+                Agent Sine
+            </td>
+            <td>:</td>
+            <td>{{user.AgentSine}}</td>
+        </tr>
+        <tr>
+            <td>
+                Airport Code
+            </td>
+            <td>:</td>
+            <td>{{user.AirportCode}}</td>
+        </tr>
+        <tr>
+            <td>
+                Duty Code ID
+            </td>
+            <td>:</td>
+            <td>{{user.DutyCodeID}}</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <button>Manage Your Account</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <button routerLink="/">Log Out</button>
+            </td>
+        </tr>
+    </table>
+</mat-card>

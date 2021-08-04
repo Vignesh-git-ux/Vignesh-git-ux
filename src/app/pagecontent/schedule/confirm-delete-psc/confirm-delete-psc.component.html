@@ -1,0 +1,37 @@
+
+<div class="deleteIconDiv"><span class="material-icons">delete</span></div>
+<div class="table_div">    
+    <mat-toolbar-row >
+        <div class="flightNo">{{schedule.getCarrierCode() + " " + schedule.getFlightNo()}} </div>
+    </mat-toolbar-row>
+    <table>
+        <tr class="headerRow">
+            <th> Effective Date </th>
+            <th> Origin </th>
+            <th> Destination </th>
+            <th> Action </th>
+            <th> Discontinue Date </th>
+        </tr>
+        <tr>
+            <td> {{schedule.getEffectiveDate()}} </td>
+            <td> {{schedule.getOrigin()}} </td>
+            <td> {{schedule.getDestination()}} </td>
+            <td> {{schedule.getAction()}} </td>
+            <td> {{schedule.getDateDiscontinue()}} </td>
+        </tr>
+        <tr>  
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="cancelBtn" (click)="cancel()" >
+                    Cancel
+                </button>
+                <button class="saveBtn" (click)="delete()">
+                    Delete
+                </button>
+            </td> 
+        </tr> 
+    </table>
+</div>

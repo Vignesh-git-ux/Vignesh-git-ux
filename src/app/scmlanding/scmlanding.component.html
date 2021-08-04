@@ -1,0 +1,3 @@
+<app-header [user]="getLoggedInUser()" [title]=title></app-header>
+<app-menus *ngIf="isVisibleMenu=='true'"></app-menus>
+<router-outlet></router-outlet>
