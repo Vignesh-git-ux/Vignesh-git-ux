@@ -15,6 +15,7 @@ export class ScheduleService {
     airlineDeiInfo:any;
     pscItemNumber:any;
     currentSchedule:any;    
+    isAddSchedule : boolean = false;
     constructor(private apiRequestService : APIRequestService, private httpClient: HttpClient) {}
 
     public dispSchedule(pscItemNumber : string, callBack:Function):void {
@@ -49,5 +50,13 @@ export class ScheduleService {
 
     public deletePSC(deleteSch : DeleteSchRequest, callBack:Function):void {
       this.apiRequestService.sendDeleteRequest(this.SCHEDULE_API_URL, deleteSch, callBack, DisplayScheduleResponse.prototype);
+    }
+
+    get IsAddSchedule(): boolean {
+      return this.isAddSchedule;
+    }
+  
+    set IsAddSchedule(value) {
+      this.isAddSchedule = value;
     }
 }

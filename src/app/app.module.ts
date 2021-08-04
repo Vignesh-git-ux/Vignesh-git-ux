@@ -38,6 +38,7 @@ import { AirlineDetailsComponent } from './airline-details/airline-details.compo
 import { ClickOutsideModule } from 'ng-click-outside';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { AgGridModule } from 'ag-grid-angular';
+import { MatSelectModule } from '@angular/material/select';
 // import { ButtonRendererComponent } from './button-renderer.component';
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { AgGridModule } from 'ag-grid-angular';
     MatInputModule,
     MatGridListModule,
     MatDialogModule,
+    MatSelectModule ,
     NgbModule,
     ClickOutsideModule,
     NgMultiSelectDropDownModule.forRoot(),

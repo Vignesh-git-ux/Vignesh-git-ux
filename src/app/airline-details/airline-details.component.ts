@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { DisplayScheduleData, DisplayScheduleResponse } from '../models/displaySchedul';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Console } from 'console';
-import { NgbDateStruct,NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { MenuService } from '../services/menus/menu.service';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
@@ -17,172 +17,176 @@ import { ErrorComponent } from '../error/error/error.component';
   styleUrls: ['./airline-details.component.scss']
 })
 export class AirlineDetailsComponent implements OnInit {
-  
+
   flightForm!: FormGroup;
-  segmentForm!: FormGroup;  
-  i=0;
-  airlineDeiInfo!:any;
-  updatedDEIInformation:any=[];
+  segmentForm!: FormGroup;
+  i = 0;
+  airlineDeiInfo!: any;
+  updatedDEIInformation: any = [];
   showBox = true;
   schedule !: DisplayScheduleResponse;
-  scheduleData !: DisplayScheduleData;       
-  FltNum:any='';
-  dropdownList :any = [];
-  selectedItems :any = [];
-  active = 1;  
-  clipboard='';  
+  scheduleData !: DisplayScheduleData;
+  FltNum: any = '';
+  dropdownList: any = [];
+  selectedItems: any = [];
+  active = 1;
+  clipboard = '';
   dropdownData = [];
-  DEITableData:any = [];
-  DEITableText:any=[];
-  count = 0; 
+  DEITableData: any = [];
+  DEITableText: any = [];
+  count = 0;
   deletedRowCount = 0;
   addRowCount = 0;
-  searchBarData={
+  searchBarData = {
     id: '',
     key: '',
-    DEI :'',
-    DEIText:''
+    DEI: '',
+    DEIText: ''
   }
-  tablearray: any=[]
-  datacount:number=0;
-  DEIData:any= {
-    id:'',
-   key: '',    
-   DEI :'',
-   DEIText:''
+  tablearray: any = []
+  datacount: number = 0;
+  DEIData: any = {
+    id: '',
+    key: '',
+    DEI: '',
+    DEIText: ''
   }
   showEditTable: boolean = false
-  EditRowId:any = '';
-  dropdownSettings!:IDropdownSettings;
-  deiText:string='';
-  updatedData:string='';
+  EditRowId: any = '';
+  dropdownSettings!: IDropdownSettings;
+  deiText: string = '';
+  updatedData: string = '';
 
   model!: NgbDateStruct;
   date!: { year: number; month: number; };
   message: any;
-    constructor(public formBuilder: FormBuilder,private scheduleService : ScheduleService,
-      private calendar: NgbCalendar,private menuService : MenuService,
-      private snackbarService : SnackbarService, 
-       ) { 
 
-          // this.message = data;
-        }
+  isDisabled = true;
 
-  
-  ngOnInit(): void {      
+  constructor(public formBuilder: FormBuilder, private scheduleService: ScheduleService,
+    private calendar: NgbCalendar, private menuService: MenuService,
+    private snackbarService: SnackbarService,
+  ) {
+
+    // this.message = data;
+  }
+  ngOnInit(): void {
+    this.isDisabled = !this.scheduleService.isAddSchedule;
     this.flightForm = this.formBuilder.group({
-      PSCAction: [{value: '', disabled: true}],
-      AirlineCC: [{value: '', disabled: true}],
-      FltNum: [{value: '', disabled: true}],
-      DepartureCity: [{value: '', disabled: true}],
-      SchEffDate: [{value: '', disabled: true}],
-      SchDisDate: [{value: '', disabled: true}],
-      SchFrequency: [{value: '', disabled: true}],
-      ArrivalCity: [{value: '', disabled: true}]
+      PSCAction: [{ value: '', disabled: this.isDisabled }],
+      AirlineCC: [{ value: '', disabled: this.isDisabled }],
+      FltNum: [{ value: '', disabled: this.isDisabled }],
+      DepartureCity: [{ value: '', disabled: this.isDisabled }],
+      SchEffDate: [{ value: '', disabled: this.isDisabled }],
+      SchDisDate: [{ value: '', disabled: this.isDisabled }],
+      SchFrequency: [{ value: '', disabled: this.isDisabled }],
+      ArrivalCity: [{ value: '', disabled: this.isDisabled }]
     })
 
-     this.segmentForm = this.formBuilder.group({
-    TimeMode: [''],
-    AircraftSTA: [''],
-    PaxSTA: [''],
-    DepTerminal: [''],
-    ArrTerminal: [''],
-    AircraftConfig: [''],
-    AircraftType: [''],
-    FreqRate: [''],
-    AircraftSTD: [''],
-    PaxSTD: [''],
-    deptimevarfromutc: [''],
-    arrtimevarfromutc: [''],
-    InFltAdj: [''],
-    EqpSerType: ['']
-      })
-    this.mapFormData(this.scheduleService.airlineScheduleData)    
-    this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)       
-    this.airlineDeiInfo = (this.scheduleService.airlineDeiInfo.Data)
-    this.constructSearchBarData()
-  
+    this.segmentForm = this.formBuilder.group({
+      TimeMode: [''],
+      AircraftSTA: [''],
+      PaxSTA: [''],
+      DepTerminal: [''],
+      ArrTerminal: [''],
+      AircraftConfig: [''],
+      AircraftType: [''],
+      FreqRate: [''],
+      AircraftSTD: [''],
+      PaxSTD: [''],
+      deptimevarfromutc: [''],
+      arrtimevarfromutc: [''],
+      InFltAdj: [''],
+      EqpSerType: ['']
+    })
+    if (!this.scheduleService.IsAddSchedule) {
+      this.mapFormData(this.scheduleService.airlineScheduleData)
+      this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)
+      this.airlineDeiInfo = (this.scheduleService.airlineDeiInfo.Data)
+      this.constructSearchBarData()
+    }
     this.dropdownSettings = {
-      singleSelection: false,  
+      singleSelection: false,
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 1,
-      limitSelection:1,
+      limitSelection: 1,
       allowSearchFilter: true
-  };                  
+    };
   }
   //ngOninit End
-  
 
-  
-  Edit(value:any,i: any){
+
+
+  Edit(value: any, i: any) {
     setTimeout(() => {
-      this.showBox = true;      
+      this.showBox = true;
       this.EditRowId = (i).toString()
-      if(value>this.EditRowId){
+      if (value > this.EditRowId) {
         this.EditRowId = (value)
-      }     
+      }
     }, 100);
-  }      
-  
-  copyToClip($event:Event){    
+  }
+
+  copyToClip($event: Event) {
     this.copyMessage(this.clipboard)
   }
-  getControl(){    
+  getControl() {
     return this.flightForm.controls;
   }
-  
-  onSubmit(){             
-    this.dispModifyPSC()  
+
+  onSubmit() {
+    this.dispModifyPSC()
     this.menuService.displayMenu("true");
     window.history.back();
   }
-  
-  async constructSearchBarData(){                
-      for (var key in this.airlineDeiInfo) {
-        if (this.airlineDeiInfo.hasOwnProperty(key)) {
-        var val = this.airlineDeiInfo[key];    
-        val = val.replace('-','').trim()        
-         this.searchBarData={
+
+  async constructSearchBarData() {
+    for (var key in this.airlineDeiInfo) {
+      if (this.airlineDeiInfo.hasOwnProperty(key)) {
+        var val = this.airlineDeiInfo[key];
+        val = val.replace('-', '').trim()
+        this.searchBarData = {
           id: this.count.toString(),
           key: key,
-          DEI :key+'-'+val,
-          DEIText:''
-          }                       
-          this.dropdownList.push(this.searchBarData.DEI)
+          DEI: key + '-' + val,
+          DEIText: ''
         }
-        this.count++
-      }        
+        this.dropdownList.push(this.searchBarData.DEI)
+      }
+      this.count++
+    }
     return this.searchBarData;
   }
 
   onClickedOutside(e: any) {
     this.showBox = false;
-    this.EditRowId = e    
+    this.EditRowId = e
   }
 
-  onEnterUpdatedData(value: any,i: any) {
-    this.showBox = false;    
+  onEnterUpdatedData(value: any, i: any) {
+    this.showBox = false;
     this.EditRowId = i
-      if(value>this.EditRowId){
-        this.EditRowId = parseInt(value)
-      }    
+    if (value > this.EditRowId) {
+      this.EditRowId = parseInt(value)
+    }
 
-    this.DEITableData.map((rowData: any)=>{      
-      if(rowData.id == this.EditRowId){        
+    this.DEITableData.map((rowData: any) => {
+      if (rowData.id == this.EditRowId) {
         rowData.DEIText = this.updatedData
       }
-    })    
-    this.updatedData = ''    
+    })
+    this.updatedData = ''
   }
 
-  resetForm(){
+  resetForm() {
     this.flightForm.reset()
     this.segmentForm.reset();
     this.menuService.displayMenu("true");
     window.history.back();
+    this.scheduleService.IsAddSchedule = false;
   }
-  copyMessage(val: string){
+  copyMessage(val: string) {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -193,166 +197,166 @@ export class AirlineDetailsComponent implements OnInit {
     selBox.focus();
     selBox.select();
     document.execCommand('copy');
-    document.body.removeChild(selBox);    
+    document.body.removeChild(selBox);
   }
-  
-  mapFormData(apiData:any){      
+
+  mapFormData(apiData: any) {
     // console.log('apiData',apiData)
     this.flightForm.setValue({
-        PSCAction: (typeof(apiData.PSCAction) == "undefined" ? '' : apiData.PSCAction),       
-        AirlineCC:(typeof(apiData.AirlineCC) == "undefined" ? '' : apiData.AirlineCC),
-        FltNum:(typeof(apiData.FltNum) == "undefined" ? '' : apiData.FltNum),        
-        SchEffDate:(typeof(apiData.SchEffDate) == "undefined" ? '' : apiData.SchEffDate),
-        SchDisDate:(typeof(apiData.SchDisDate) == "undefined" ? '' : apiData.SchDisDate),
-        SchFrequency:(typeof(apiData.SchFrequency) == "undefined" ? '' : apiData.SchFrequency),    
-        DepartureCity:(typeof(apiData.DepartureCity) == "undefined" ? '' : apiData.DepartureCity),       
-        ArrivalCity:(typeof(apiData.ArrivalCity) == "undefined" ? '' : apiData.ArrivalCity)                 
-      });
+      PSCAction: (typeof (apiData.PSCAction) == "undefined" ? '' : apiData.PSCAction),
+      AirlineCC: (typeof (apiData.AirlineCC) == "undefined" ? '' : apiData.AirlineCC),
+      FltNum: (typeof (apiData.FltNum) == "undefined" ? '' : apiData.FltNum),
+      SchEffDate: (typeof (apiData.SchEffDate) == "undefined" ? '' : apiData.SchEffDate),
+      SchDisDate: (typeof (apiData.SchDisDate) == "undefined" ? '' : apiData.SchDisDate),
+      SchFrequency: (typeof (apiData.SchFrequency) == "undefined" ? '' : apiData.SchFrequency),
+      DepartureCity: (typeof (apiData.DepartureCity) == "undefined" ? '' : apiData.DepartureCity),
+      ArrivalCity: (typeof (apiData.ArrivalCity) == "undefined" ? '' : apiData.ArrivalCity)
+    });
 
-      this.segmentForm.setValue({
-        TimeMode: (typeof(apiData.TimeMode) == "undefined" ? '' : apiData.TimeMode),
-        AircraftSTA: (typeof(apiData.AircraftSTA) == "undefined" ? '' : apiData.AircraftSTA),
-        PaxSTA: (typeof(apiData.PaxSTA) == "undefined" ? '' : apiData.PaxSTA),
-        DepTerminal: (typeof(apiData.DepTerminal) == "undefined" ? '' : apiData.DepTerminal),
-        ArrTerminal: (typeof(apiData.ArrTerminal) == "undefined" ? '' : apiData.ArrTerminal),
-        AircraftConfig: (typeof(apiData.AircraftConfig) == "undefined" ? '' : apiData.AircraftConfig),
-        AircraftType: (typeof(apiData.AircraftType) == "undefined" ? '' : apiData.AircraftType),
-        FreqRate: (typeof(apiData.FreqRate) == "undefined" ? '' : apiData.FreqRate),
-        AircraftSTD: (typeof(apiData.AircraftSTD) == "undefined" ? '' : apiData.AircraftSTD),
-        PaxSTD: (typeof(apiData.PaxSTD) == "undefined" ? '' : apiData.PaxSTD),
-        deptimevarfromutc: (typeof(apiData.deptimevarfromutc) == "undefined" ? '' : apiData.deptimevarfromutc),
-        arrtimevarfromutc: (typeof(apiData.arrtimevarfromutc) == "undefined" ? '' : apiData.arrtimevarfromutc),
-        InFltAdj: (typeof(apiData.InFltAdj) == "undefined" ? '' : apiData.InFltAdj),
-        EqpSerType: (typeof(apiData.EqpSerType) == "undefined" ? '' : apiData.EqpSerType)                       
-      });
-          
-     
-  // this.segmentForm = this.formBuilder.group({
-  //   TimeMode: [''],
-  //   AircraftSTA: [''],
-  //   PaxSTA: [''],
-  //   DepTerminal: [''],
-  //   ArrTerminal: [''],
-  //   AircraftConfig: [''],
-  //   AircraftType: [''],
-  //   FreqRate: [''],
-  //   AircraftSTD: [''],
-  //   PaxSTD: [''],
-  //   deptimevarfromutc: [''],
-  //   arrtimevarfromutc: [''],
-  //   InFltAdj: [''],
-  //   EqpSerType: ['']
-  //     }) 
-    }
+    this.segmentForm.setValue({
+      TimeMode: (typeof (apiData.TimeMode) == "undefined" ? '' : apiData.TimeMode),
+      AircraftSTA: (typeof (apiData.AircraftSTA) == "undefined" ? '' : apiData.AircraftSTA),
+      PaxSTA: (typeof (apiData.PaxSTA) == "undefined" ? '' : apiData.PaxSTA),
+      DepTerminal: (typeof (apiData.DepTerminal) == "undefined" ? '' : apiData.DepTerminal),
+      ArrTerminal: (typeof (apiData.ArrTerminal) == "undefined" ? '' : apiData.ArrTerminal),
+      AircraftConfig: (typeof (apiData.AircraftConfig) == "undefined" ? '' : apiData.AircraftConfig),
+      AircraftType: (typeof (apiData.AircraftType) == "undefined" ? '' : apiData.AircraftType),
+      FreqRate: (typeof (apiData.FreqRate) == "undefined" ? '' : apiData.FreqRate),
+      AircraftSTD: (typeof (apiData.AircraftSTD) == "undefined" ? '' : apiData.AircraftSTD),
+      PaxSTD: (typeof (apiData.PaxSTD) == "undefined" ? '' : apiData.PaxSTD),
+      deptimevarfromutc: (typeof (apiData.deptimevarfromutc) == "undefined" ? '' : apiData.deptimevarfromutc),
+      arrtimevarfromutc: (typeof (apiData.arrtimevarfromutc) == "undefined" ? '' : apiData.arrtimevarfromutc),
+      InFltAdj: (typeof (apiData.InFltAdj) == "undefined" ? '' : apiData.InFltAdj),
+      EqpSerType: (typeof (apiData.EqpSerType) == "undefined" ? '' : apiData.EqpSerType)
+    });
 
-    onItemSelect(item: any) {
-      console.log(item,'this.selectedItems')      
-      console.log(item);
-    }
-    onSelectAll(items: any) {
-      console.log(items);
-    }
-    tablerowcount:any=0;
-    addDEITextToTable(){            
-      
-      this.tablerowcount = this.DEITableData.map((ele: any)=>{                      
-        return ele.id
-      })    
-      this.tablerowcount = parseInt(this.tablerowcount[this.tablerowcount.length - 1]) + 1;                                                    
-            if(isNaN(this.tablerowcount)){
-              console.log('Yes',isNaN(this.tablerowcount))
-              this.tablerowcount = 0;
-            }
-            else{
-              console.log('No',isNaN(this.tablerowcount))
-            }
-            this.selectedItems.map((selected: any)=>{                
-                    let value = selected
-                    let key  = selected.split('-')[0].trim();                                 
-                    this.DEIData = {
-                     id: this.tablerowcount.toString(),                
-                     key: key,
-                     DEI : value,
-                     DEIText: this.deiText
-                     }   
-                    this.DEITableData.push(this.DEIData)
-                    this.DEIData = {}                  
-                  selected=''
-                  this.tablerowcount++  
-              })           
-              
-              if(this.deletedRowCount!=0){
-                this.deletedRowCount = this.deletedRowCount - 1;
-              }
-              this.deiText = ''
+
+    // this.segmentForm = this.formBuilder.group({
+    //   TimeMode: [''],
+    //   AircraftSTA: [''],
+    //   PaxSTA: [''],
+    //   DepTerminal: [''],
+    //   ArrTerminal: [''],
+    //   AircraftConfig: [''],
+    //   AircraftType: [''],
+    //   FreqRate: [''],
+    //   AircraftSTD: [''],
+    //   PaxSTD: [''],
+    //   deptimevarfromutc: [''],
+    //   arrtimevarfromutc: [''],
+    //   InFltAdj: [''],
+    //   EqpSerType: ['']
+    //     }) 
   }
 
-
-deleteRowData(selectedItem: any) {  
-  let filtereddata = this.DEITableData.filter((ele: any)=>{        
-    return (ele.id != selectedItem.id)
-  })    
-  this.DEITableData = filtereddata 
-  this.deletedRowCount++;   
-  console.log(this.DEITableData)
-  // this.dropdownList = this.DEITableData.map((ele:any)=> ele.DEI)
-}
-dispModifyPSC() : void {
-  const pscItemNumber =  this.scheduleService.pscItemNumber;
-  console.log('pscItemNumber',pscItemNumber)
-  let scheduleObj = this.setDataHeadersforMODPSC(this.scheduleService.airlineScheduleData)    
-  let DEIInformation = {
-    DEIInformation: this.DEITableData    
+  onItemSelect(item: any) {
+    console.log(item, 'this.selectedItems')
+    console.log(item);
   }
-  let dataObject = {
-     ...this.flightForm.value,
-     ...this.segmentForm.value,
-     ...DEIInformation,
-     ...scheduleObj
+  onSelectAll(items: any) {
+    console.log(items);
   }
-  console.log('dTA',dataObject)  
-  setTimeout(() => {    
-    this.scheduleService.dispScheduleModify(pscItemNumber,dataObject, this.callBackPSC.bind(this));
-  }, 2000);
-}
+  tablerowcount: any = 0;
+  addDEITextToTable() {
 
-  callBackPSC(response : DisplayScheduleResponse) : void {  
-      this.schedule = response;       
-      this.message = this.schedule.Header.ResponseText         
-      if(this.message !== "Success"){
-        this.snackbarService.openSnackBar(ErrorComponent,this.message);
+    this.tablerowcount = this.DEITableData.map((ele: any) => {
+      return ele.id
+    })
+    this.tablerowcount = parseInt(this.tablerowcount[this.tablerowcount.length - 1]) + 1;
+    if (isNaN(this.tablerowcount)) {
+      console.log('Yes', isNaN(this.tablerowcount))
+      this.tablerowcount = 0;
+    }
+    else {
+      console.log('No', isNaN(this.tablerowcount))
+    }
+    this.selectedItems.map((selected: any) => {
+      let value = selected
+      let key = selected.split('-')[0].trim();
+      this.DEIData = {
+        id: this.tablerowcount.toString(),
+        key: key,
+        DEI: value,
+        DEIText: this.deiText
       }
+      this.DEITableData.push(this.DEIData)
+      this.DEIData = {}
+      selected = ''
+      this.tablerowcount++
+    })
 
-  }
-
- 
-  setDEIInfotoTable(rowData: any){
-    if(Array.isArray(rowData)){
-    let rowCount = 0;
-    rowData.map((ele: any)=> {      
-      this.DEIData={
-        id: rowCount.toString(), 
-        key: ele.DEI.split('-')[0].trim(),      
-        DEI :ele.DEI.trim(),
-        DEIText:ele.DEIText.trim()
-        }       
-      this.DEITableData.push(this.DEIData) 
-      rowCount++;     
-    })      
-    }  
+    if (this.deletedRowCount != 0) {
+      this.deletedRowCount = this.deletedRowCount - 1;
+    }
+    this.deiText = ''
   }
 
 
+  deleteRowData(selectedItem: any) {
+    let filtereddata = this.DEITableData.filter((ele: any) => {
+      return (ele.id != selectedItem.id)
+    })
+    this.DEITableData = filtereddata
+    this.deletedRowCount++;
+    console.log(this.DEITableData)
+    // this.dropdownList = this.DEITableData.map((ele:any)=> ele.DEI)
+  }
+  dispModifyPSC(): void {
+    const pscItemNumber = this.scheduleService.pscItemNumber;
+    console.log('pscItemNumber', pscItemNumber)
+    let scheduleObj = this.setDataHeadersforMODPSC(this.scheduleService.airlineScheduleData)
+    let DEIInformation = {
+      DEIInformation: this.DEITableData
+    }
+    let dataObject = {
+      ...this.flightForm.value,
+      ...this.segmentForm.value,
+      ...DEIInformation,
+      ...scheduleObj
+    }
+    console.log('dTA', dataObject)
+    setTimeout(() => {
+      this.scheduleService.dispScheduleModify(pscItemNumber, dataObject, this.callBackPSC.bind(this));
+    }, 2000);
+  }
 
-  setDataHeadersforMODPSC(scheduleData:any){
-            
+  callBackPSC(response: DisplayScheduleResponse): void {
+    this.schedule = response;
+    this.message = this.schedule.Header.ResponseText
+    if (this.message !== "Success") {
+      this.snackbarService.openSnackBar(ErrorComponent, this.message);
+    }
+
+  }
+
+
+  setDEIInfotoTable(rowData: any) {
+    if (Array.isArray(rowData)) {
+      let rowCount = 0;
+      rowData.map((ele: any) => {
+        this.DEIData = {
+          id: rowCount.toString(),
+          key: ele.DEI.split('-')[0].trim(),
+          DEI: ele.DEI.trim(),
+          DEIText: ele.DEIText.trim()
+        }
+        this.DEITableData.push(this.DEIData)
+        rowCount++;
+      })
+    }
+  }
+
+
+
+  setDataHeadersforMODPSC(scheduleData: any) {
+
     let extraObj = {
-      CreAgntAirport: scheduleData.CreAgntAirport,      
+      CreAgntAirport: scheduleData.CreAgntAirport,
       CreAgntDuty: scheduleData.CreAgntDuty,
       CreAgntID: scheduleData.CreAgntID,
       CreAgntSine: scheduleData.CreAgntSine,
       CreDteTime: scheduleData.CreDteTime,
-      GSI1PK:  scheduleData.GSI1PK,
+      GSI1PK: scheduleData.GSI1PK,
       GSI1SK: scheduleData.GSI1SK,
       LSI1SK: scheduleData.LSI1SK,
       ModAgntAirport: scheduleData.ModAgntAirport,
@@ -362,12 +366,12 @@ dispModifyPSC() : void {
       ModDteTime: scheduleData.ModDteTime,
       PK: scheduleData.PK,
       SK: scheduleData.SK,
-      PRBD: scheduleData.PRBD  
+      PRBD: scheduleData.PRBD
     }
-    return extraObj  
+    return extraObj
   }
 
-  closeSnackBar() : void {
+  closeSnackBar(): void {
     this.snackbarService.closeSnackBar();
   }
 }

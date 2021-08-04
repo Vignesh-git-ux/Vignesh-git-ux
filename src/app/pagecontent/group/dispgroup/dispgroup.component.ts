@@ -15,9 +15,9 @@ import { GroupService } from '../../../services/group/group.service';
 import { ConfirmDeletePSCComponent } from '../../schedule/confirm-delete-psc/confirm-delete-psc.component';
 
 @Component({
-  selector: 'app-dispgroup',
-  templateUrl: './dispgroup.component.html',
-  styleUrls: ['../../../../../node_modules/material-design-icons/iconfont/material-icons.css', './dispgroup.component.scss']
+    selector: 'app-dispgroup',
+    templateUrl: './dispgroup.component.html',
+    styleUrls: ['../../../../../node_modules/material-design-icons/iconfont/material-icons.css', './dispgroup.component.scss']
 })
 export class DispgroupComponent {
 
@@ -29,32 +29,33 @@ export class DispgroupComponent {
     displayedColumns: string[] = ['chkBox', 'Flight', 'Date', 'Origin', 'Des', 'Act', 'DteDis', 'edit', 'delete', 'copy'];
     dataSource = new MatTableDataSource<PSCItem>();
     @ViewChild(MatTable) table !: MatTable<any>;
-    
+
     grpFilter = new FormControl('');
-    filterValues = {filter : ''};
-    
-    constructor(private route: ActivatedRoute, private router: Router, 
-        private groupService : GroupService, private scheduleService : ScheduleService,
-        private snackbarService : SnackbarService, private dialogService : DialogService) {
-      
+    filterValues = { filter: '' };
+
+    constructor(private route: ActivatedRoute, private router: Router,
+        private groupService: GroupService, private scheduleService: ScheduleService,
+        private snackbarService: SnackbarService, private dialogService: DialogService) {
+
         this.route.params.subscribe(params => {
-            
+
             this.grpFilter.setValue("");
             this.groupId = params["GRPID"];
             this.version = params["VerNum"];
-            this.dispGroup( );
+            this.dispGroup();
         });
 
         this.grpFilter.valueChanges.subscribe(search => {
             this.filterValues.filter = search;
             this.dataSource.filter = JSON.stringify(this.filterValues);
         });
+        this.scheduleService.IsAddSchedule = false;
     }
 
     createFilter(): (data: any, filter: string) => boolean {
-      
-        let filterFunction = function(data : PSCItem, filter : any): boolean {
-           
+
+        let filterFunction = function (data: PSCItem, filter: any): boolean {
+
             let searchTerms = JSON.parse(filter);
             let grpId = data.getCarrierCode() && data.getCarrierCode().toLowerCase();
             let flightNo = data.getFlightNo() && data.getFlightNo().toLowerCase();
@@ -64,7 +65,7 @@ export class DispgroupComponent {
             let searchTerm = (searchTerms.filter as string).toLowerCase();
             let effDate = data.getEffectiveDate() && data.getEffectiveDate().toLowerCase();
             let disDate = data.getDateDiscontinue() && data.getDateDiscontinue().toLowerCase();
-            
+
             return grpId.indexOf(searchTerm) !== -1
                 || flightNo.indexOf(searchTerm) !== -1
                 || origin.indexOf(searchTerm) !== -1
@@ -77,11 +78,11 @@ export class DispgroupComponent {
         return filterFunction;
     }
 
-    dispGroup():void {        
+    dispGroup(): void {
         this.groupService.dispGroup(this.groupId, this.version, this.callBackGroup.bind(this));
     }
 
-    callBackGroup(grp : DisplayGroupresponse) {
+    callBackGroup(grp: DisplayGroupresponse) {
 
         if (!this.deleteMode) {
             this.snackbarService.closeSnackBar();
@@ -95,20 +96,20 @@ export class DispgroupComponent {
         this.displaySchedules();
     }
 
-    dispPSC(row:PSCItem) : void {
-        this.router.navigate(["/scmlanding/disppsc", {"PSCItemNumber" : row.PSCItemNumber, "active": this.group.Data[0].VERStatus}]);
+    dispPSC(row: PSCItem): void {
+        this.router.navigate(["/scmlanding/disppsc", { "PSCItemNumber": row.PSCItemNumber, "active": this.group.Data[0].VERStatus }]);
     }
 
-    displaySchedules() : void {
-    
+    displaySchedules(): void {
+
         if (!this.deleteMode) {
             this.snackbarService.closeSnackBar();
         }
         if (this.group.Data && this.group.Data.length > 0) {
-            
+
             this.group.Data.forEach(data => {
-                
-              if (data.PSCItems && data.PSCItems.length > 0) {
+
+                if (data.PSCItems && data.PSCItems.length > 0) {
                     this.dataSource.data = data.PSCItems;
                     this.dataSource.filterPredicate = this.createFilter();
                 } else {
@@ -123,32 +124,36 @@ export class DispgroupComponent {
         }
     }
 
-    confirmDeletePSC(row : PSCItem) : void {
+    confirmDeletePSC(row: PSCItem): void {
         this.dialogService.openDialog(ConfirmDeletePSCComponent, row, this.deletePsc.bind(this));
     }
 
-    deletePsc(pSCItem : PSCItem) {
-        
+    deletePsc(pSCItem: PSCItem) {
+
         if (pSCItem) {
 
             let Header = new DelSchHeader("DELPSC", this.version, this.groupId, "0001");
-            let data = [{"PSCID" : pSCItem.PSCItemNumber}];
-            let req = new DeleteSchRequest(Header, data);            
+            let data = [{ "PSCID": pSCItem.PSCItemNumber }];
+            let req = new DeleteSchRequest(Header, data);
             this.scheduleService.deletePSC(req, this.callBackDelPSC.bind(this));
         }
-    }  
-    
-    callBackDelPSC(resp : DisplayScheduleResponse) : void  {
+    }
+
+    callBackDelPSC(resp: DisplayScheduleResponse): void {
 
         this.snackbarService.closeSnackBar();
         if (resp.Header.ResponseText != "Success") {
             this.snackbarService.openSnackBar(ErrorComponent, resp.Header.ResponseText);
             return;
-        } 
-        
+        }
+
         this.snackbarService.openSnackBar(ErrorComponent, "Schedule deleted Successfully");
         this.deleteMode = true;
         this.dispGroup();
+    }
+    onTypeChange(selectedType: string) {
+        this.scheduleService.IsAddSchedule = true;
+        this.router.navigate(['/scmlanding/disppsc']);
     }
 }
 

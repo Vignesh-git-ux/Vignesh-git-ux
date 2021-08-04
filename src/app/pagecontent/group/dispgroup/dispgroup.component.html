@@ -18,13 +18,13 @@
             <input [formControl]="grpFilter" id="grpFilter" type="text" placeholder="Search">
             <span class="material-icons">search</span>
         </div>
-        <!-- <mat-form-field appearance="fill">
+        <mat-form-field  >
             <mat-label>Action List</mat-label>
-            <mat-select matNativeControl >
+            <mat-select matNativeControl (selectionChange)="onTypeChange($event.value)">
                 <mat-option>None</mat-option>
-                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option1">ADD</mat-option>
             </mat-select>
-          </mat-form-field> -->
+          </mat-form-field>
 
         <!-- <button class="actLstBtn" >
         
