@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
@@ -7,6 +7,10 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Console } from 'console';
 import { NgbDateStruct,NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { MenuService } from '../services/menus/menu.service';
+import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
+import { ErrorComponent } from '../error/error/error.component';
 @Component({
   selector: 'app-airline-details',
   templateUrl: './airline-details.component.html',
@@ -21,8 +25,8 @@ export class AirlineDetailsComponent implements OnInit {
   updatedDEIInformation:any=[];
   showBox = true;
   schedule !: DisplayScheduleResponse;
-    scheduleData !: DisplayScheduleData;       
-    FltNum:any='';
+  scheduleData !: DisplayScheduleData;       
+  FltNum:any='';
   dropdownList :any = [];
   selectedItems :any = [];
   active = 1;  
@@ -55,8 +59,14 @@ export class AirlineDetailsComponent implements OnInit {
 
   model!: NgbDateStruct;
   date!: { year: number; month: number; };
+  message: any;
     constructor(public formBuilder: FormBuilder,private scheduleService : ScheduleService,
-      private calendar: NgbCalendar) { }
+      private calendar: NgbCalendar,private menuService : MenuService,
+      private snackbarService : SnackbarService, 
+       ) { 
+
+          // this.message = data;
+        }
 
   
   ngOnInit(): void {      
@@ -73,19 +83,19 @@ export class AirlineDetailsComponent implements OnInit {
 
      this.segmentForm = this.formBuilder.group({
     TimeMode: [''],
-    aircraftsta: [''],
-    paxsta: [''],
-    depterminal: [''],
-    arrterminal: [''],
-    aircraftconfig: [''],
-    aircrafttype: [''],
+    AircraftSTA: [''],
+    PaxSTA: [''],
+    DepTerminal: [''],
+    ArrTerminal: [''],
+    AircraftConfig: [''],
+    AircraftType: [''],
     FreqRate: [''],
-    aircraftstd: [''],
-    paxstd: [''],
+    AircraftSTD: [''],
+    PaxSTD: [''],
     deptimevarfromutc: [''],
     arrtimevarfromutc: [''],
-    inflightadj: [''],
-    eqpsertype: ['']
+    InFltAdj: [''],
+    EqpSerType: ['']
       })
     this.mapFormData(this.scheduleService.airlineScheduleData)    
     this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)       
@@ -123,7 +133,9 @@ export class AirlineDetailsComponent implements OnInit {
   }
   
   onSubmit(){             
-    this.dispModifyPSC()    
+    this.dispModifyPSC()  
+    this.menuService.displayMenu("true");
+    window.history.back();
   }
   
   async constructSearchBarData(){                
@@ -167,6 +179,8 @@ export class AirlineDetailsComponent implements OnInit {
   resetForm(){
     this.flightForm.reset()
     this.segmentForm.reset();
+    this.menuService.displayMenu("true");
+    window.history.back();
   }
   copyMessage(val: string){
     const selBox = document.createElement('textarea');
@@ -183,7 +197,7 @@ export class AirlineDetailsComponent implements OnInit {
   }
   
   mapFormData(apiData:any){      
-    console.log('apiData',apiData)
+    // console.log('apiData',apiData)
     this.flightForm.setValue({
         PSCAction: (typeof(apiData.PSCAction) == "undefined" ? '' : apiData.PSCAction),       
         AirlineCC:(typeof(apiData.AirlineCC) == "undefined" ? '' : apiData.AirlineCC),
@@ -197,37 +211,37 @@ export class AirlineDetailsComponent implements OnInit {
 
       this.segmentForm.setValue({
         TimeMode: (typeof(apiData.TimeMode) == "undefined" ? '' : apiData.TimeMode),
-        aircraftsta: (typeof(apiData.aircraftsta) == "undefined" ? '' : apiData.aircraftsta),
-        paxsta: (typeof(apiData.paxsta) == "undefined" ? '' : apiData.paxsta),
-        depterminal: (typeof(apiData.depterminal) == "undefined" ? '' : apiData.depterminal),
-        arrterminal: (typeof(apiData.arrterminal) == "undefined" ? '' : apiData.arrterminal),
-        aircraftconfig: (typeof(apiData.aircraftconfig) == "undefined" ? '' : apiData.aircraftconfig),
-        aircrafttype: (typeof(apiData.aircrafttype) == "undefined" ? '' : apiData.aircrafttype),
+        AircraftSTA: (typeof(apiData.AircraftSTA) == "undefined" ? '' : apiData.AircraftSTA),
+        PaxSTA: (typeof(apiData.PaxSTA) == "undefined" ? '' : apiData.PaxSTA),
+        DepTerminal: (typeof(apiData.DepTerminal) == "undefined" ? '' : apiData.DepTerminal),
+        ArrTerminal: (typeof(apiData.ArrTerminal) == "undefined" ? '' : apiData.ArrTerminal),
+        AircraftConfig: (typeof(apiData.AircraftConfig) == "undefined" ? '' : apiData.AircraftConfig),
+        AircraftType: (typeof(apiData.AircraftType) == "undefined" ? '' : apiData.AircraftType),
         FreqRate: (typeof(apiData.FreqRate) == "undefined" ? '' : apiData.FreqRate),
-        aircraftstd: (typeof(apiData.aircraftstd) == "undefined" ? '' : apiData.aircraftstd),
-        paxstd: (typeof(apiData.paxstd) == "undefined" ? '' : apiData.paxstd),
+        AircraftSTD: (typeof(apiData.AircraftSTD) == "undefined" ? '' : apiData.AircraftSTD),
+        PaxSTD: (typeof(apiData.PaxSTD) == "undefined" ? '' : apiData.PaxSTD),
         deptimevarfromutc: (typeof(apiData.deptimevarfromutc) == "undefined" ? '' : apiData.deptimevarfromutc),
         arrtimevarfromutc: (typeof(apiData.arrtimevarfromutc) == "undefined" ? '' : apiData.arrtimevarfromutc),
-        inflightadj: (typeof(apiData.inflightadj) == "undefined" ? '' : apiData.inflightadj),
-        eqpsertype: (typeof(apiData.eqpsertype) == "undefined" ? '' : apiData.eqpsertype)                       
+        InFltAdj: (typeof(apiData.InFltAdj) == "undefined" ? '' : apiData.InFltAdj),
+        EqpSerType: (typeof(apiData.EqpSerType) == "undefined" ? '' : apiData.EqpSerType)                       
       });
           
      
   // this.segmentForm = this.formBuilder.group({
   //   TimeMode: [''],
-  //   aircraftsta: [''],
-  //   paxsta: [''],
-  //   depterminal: [''],
-  //   arrterminal: [''],
-  //   aircraftconfig: [''],
-  //   aircrafttype: [''],
+  //   AircraftSTA: [''],
+  //   PaxSTA: [''],
+  //   DepTerminal: [''],
+  //   ArrTerminal: [''],
+  //   AircraftConfig: [''],
+  //   AircraftType: [''],
   //   FreqRate: [''],
-  //   aircraftstd: [''],
-  //   paxstd: [''],
+  //   AircraftSTD: [''],
+  //   PaxSTD: [''],
   //   deptimevarfromutc: [''],
   //   arrtimevarfromutc: [''],
-  //   inflightadj: [''],
-  //   eqpsertype: ['']
+  //   InFltAdj: [''],
+  //   EqpSerType: ['']
   //     }) 
     }
 
@@ -303,13 +317,17 @@ dispModifyPSC() : void {
 }
 
   callBackPSC(response : DisplayScheduleResponse) : void {  
-      this.schedule = response; 
-      // this.scheduleData = response.Data[0][0]; 
-      console.log('this.scheduleData',this.schedule)
+      this.schedule = response;       
+      this.message = this.schedule.Header.ResponseText         
+      if(this.message !== "Success"){
+        this.snackbarService.openSnackBar(ErrorComponent,this.message);
+      }
+
   }
 
  
   setDEIInfotoTable(rowData: any){
+    if(Array.isArray(rowData)){
     let rowCount = 0;
     rowData.map((ele: any)=> {      
       this.DEIData={
@@ -320,7 +338,8 @@ dispModifyPSC() : void {
         }       
       this.DEITableData.push(this.DEIData) 
       rowCount++;     
-    })        
+    })      
+    }  
   }
 
 
@@ -342,8 +361,13 @@ dispModifyPSC() : void {
       ModAgntSine: scheduleData.ModAgntSine,
       ModDteTime: scheduleData.ModDteTime,
       PK: scheduleData.PK,
-      SK: scheduleData.SK  
+      SK: scheduleData.SK,
+      PRBD: scheduleData.PRBD  
     }
     return extraObj  
+  }
+
+  closeSnackBar() : void {
+    this.snackbarService.closeSnackBar();
   }
 }

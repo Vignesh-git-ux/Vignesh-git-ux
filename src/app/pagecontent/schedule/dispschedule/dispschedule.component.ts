@@ -48,7 +48,7 @@ export class DispscheduleComponent implements OnInit {
     callBackPSC(response : DisplayScheduleResponse) : void {
         this.schedule = response;        
         this.scheduleData = response.Data[0][0];    
-        this.scheduleService.airlineScheduleData = this.scheduleData;                  
+        this.scheduleService.airlineScheduleData = this.scheduleData;                        
         this.flightNumber = this.scheduleData.AirlineCC+' '+this.scheduleData.FltNum;
     }
 

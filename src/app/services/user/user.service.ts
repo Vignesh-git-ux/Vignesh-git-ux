@@ -13,11 +13,11 @@ export class UserService {
   constructor(private apiRequestService : APIRequestService,
      private httpClient: HttpClient) {}
 
-  login(userName:string, password:string, callBack : Function) : void {
+     login(userName:string,  callBack : Function) : void {
     
       this.apiRequestService.sendPostRequest(this.LOGIN_API_URL, 
-                                             new UserRequest("LGNCHK", userName.split("/")[0], 
-                                             password, userName.split("/")[1], userName.split("/")[2],
+                                             new UserRequest("LGNCHK", userName.split("/")[0]
+                                             , userName.split("/")[1], userName.split("/")[2],
                                              userName.split("/")[3]),
                                              callBack, User.prototype);
   }

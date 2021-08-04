@@ -7,7 +7,7 @@
                 <div class="pageheading">Login</div>
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <div class="formfield">
-                        <input formControlName="userName" id="userName" type="text" class="form-control" placeholder="Agent ID/Agenent Sine/Airport Code/Duty Code" required>
+                        <input formControlName="userName" id="userName" type="text" class="form-control" placeholder="Agent ID/Agent Sine/Airport Code/Duty Code" required>
                         <i class="material-icons">person</i>
                     </div>
                     <div *ngIf="submitted && f.userName.invalid" class="alert alert-danger">

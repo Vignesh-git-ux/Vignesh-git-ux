@@ -5,18 +5,18 @@ export class UserRequest {
 
     TransactionType !: string;
     AgentID !: string;
-    Password !: string; 
+    // Password !: string; 
     AgentSine !: string;
     AirportCode !: string;
     DutyCodeID !: string;
     
     constructor(TransactionType:string, AgentID:string, 
-                Password:string, AgentSine : string,
+                 AgentSine : string,
                 AirportCode : string, DutyCodeID : string) { 
     
         this.TransactionType = TransactionType;
         this.AgentID = AgentID;
-        this.Password = Password;
+        // this.Password = Password;
         this.AgentSine = AgentSine;
         this.AirportCode = AirportCode;
         this.DutyCodeID = DutyCodeID;
