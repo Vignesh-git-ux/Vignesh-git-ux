@@ -30,7 +30,7 @@ Amplify.configure({
 
 export class LoginComponent implements OnInit {
  
-    title = "Schedule Change Manager";
+    title = "Passenger Re-accom Manager";
     submitted = false;
     invalid = false;
     errorMsg = "";

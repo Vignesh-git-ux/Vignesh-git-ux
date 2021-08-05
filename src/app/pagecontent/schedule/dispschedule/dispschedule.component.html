@@ -4,19 +4,31 @@
 
 <mat-card class="groupCard">
     <div class="grpDetail">
-        <span class="labelDtl">Group ID : </span> 
-        <span class="valueDtl">{{schedule && schedule.Header && schedule.Header.getGRPID()}} </span> 
-        <span class="copytoclipboard" data-toggle="tooltip" (click)="copyToClip($event)">
-           <img src="../../../../assets/images/paste.svg">
-         </span>  
-        <span class="labelDtl">Version : </span> 
-        <span class="valueDtl">{{schedule && schedule.Header && schedule.Header.getVerNum()}} </span> 
-        <span class="grpIndex" [class.activeGrp]="activeGrp == 'Active'">&nbsp;</span>
-        <span class="labelDtl">Flight : </span>  
-        <span class="valueDtl">{{flightNumber}} </span>
+        <div *ngIf = "!isAdd">
+            <span class="labelDtl">Group ID : </span>
+            <span class="valueDtl">{{schedule && schedule.Header && schedule.Header.getGRPID()}} </span>
+            <span class="copytoclipboard" data-toggle="tooltip" (click)="copyToClip($event)">
+                <img src="../../../../assets/images/paste.svg">
+            </span>
+            <span class="labelDtl">Version : </span>
+            <span class="valueDtl">{{schedule && schedule.Header && schedule.Header.getVerNum()}} </span>
+            <span class="grpIndex" [class.activeGrp]="activeGrp == 'Active'">&nbsp;</span>
+            <span class="labelDtl">Flight : </span>
+            <span class="valueDtl">{{flightNumber}} </span>
         </div>
+        <div *ngIf = "isAdd">
+            <span class="labelDtl">Group ID : </span>
+            <span class="valueDtl">{{groupId}} </span>
+            <span class="copytoclipboard" data-toggle="tooltip" (click)="copyToClip($event)">
+                <img src="../../../../assets/images/paste.svg">
+            </span>
+            <span class="labelDtl">Version : </span>
+            <span class="valueDtl">{{version}} </span>
+            <span class="grpIndex" [class.activeGrp]="activeGrp == 'Active'">&nbsp;</span>
+        </div>
+    </div>
     <span class="example-spacer"></span>
- 
+
     <!-- <table class="formTable">
         <tr>
             <td>
@@ -176,12 +188,10 @@
              </td>
         </tr>
     </table> -->
-
-
-<!-- //Airline details code Begin -->
-<div >
-    <app-airline-details></app-airline-details>
-</div>
-<div *ngIf="!scheduleData"></div>
+    <!-- //Airline details code Begin -->
+    <div>
+        <app-airline-details></app-airline-details>
+    </div>
+    <div *ngIf="!scheduleData"></div>
 
 </mat-card>

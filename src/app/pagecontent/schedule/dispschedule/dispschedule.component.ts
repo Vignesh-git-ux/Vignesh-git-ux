@@ -14,6 +14,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class DispscheduleComponent implements OnInit {
 
+    isAdd: Boolean;
     schedule !: DisplayScheduleResponse;
     deiSchedule !: DisplayScheduleResponse;
     scheduleData !: DisplayScheduleData;
@@ -22,17 +23,31 @@ export class DispscheduleComponent implements OnInit {
     segmentForm!: FormGroup;
     flightNumber: any = '';
     clipboard: any;
+    groupId: any;
+    version: any;
 
     constructor(private route: ActivatedRoute, private router: Router,
         private scheduleService: ScheduleService, private menuService: MenuService,
         public formBuilder: FormBuilder, public flightform: FormsModule) {
+        this.isAdd = this.scheduleService.IsAddSchedule;
+        if (this.isAdd) {
+            this.route.params.subscribe(params => {
+                this.groupId = params["GRPID"];
+                this.version = params["VerNum"];
+                this.activeGrp = params["active"];
+            });
+            this.dispDeiInfo()
+        }
+        else {
+            this.menuService.displayMenu("false");
+            this.route.params.subscribe(params => {
+                this.activeGrp = params["active"];
+                this.dispPSC(params["PSCItemNumber"])
+            });
+            this.dispDeiInfo()
+        }
 
-        this.menuService.displayMenu("false");
-        this.route.params.subscribe(params => {
-            this.activeGrp = params["active"];
-            this.dispPSC(params["PSCItemNumber"])
-        });
-        this.dispDeiInfo()
+     
     }
 
     dispPSC(pscItemNumber: string): void {
@@ -83,5 +98,9 @@ export class DispscheduleComponent implements OnInit {
         selBox.select();
         document.execCommand('copy');
         document.body.removeChild(selBox);
+    }
+
+    ngOnDestroy() {
+        this.scheduleService.IsAddSchedule = false;
     }
 }

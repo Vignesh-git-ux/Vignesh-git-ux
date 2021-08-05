@@ -48,6 +48,20 @@ export class ScheduleService {
       }
     }
 
+    public dispScheduleAdd(pscItemNumber : string,dataObject : any, callBack:Function):void {  
+      // pscItemNumber = "20210226GRP000031/V0008/PSC010"          
+      if (pscItemNumber != "") {        
+        let GRPID =  pscItemNumber.split('/')[0];
+        let VER = pscItemNumber.split('/')[1];        
+        let schedule = new ModifyScheduleRequest("ADDPSC", pscItemNumber,GRPID,VER);        
+        let requestBody ={
+          Header:{...schedule},
+          Data:[dataObject]
+        }
+        this.apiRequestService.sendPostRequest(this.SCHEDULE_API_URL, requestBody, callBack, DisplayModifyScheduleResponse.prototype);
+      }
+    }
+
     public deletePSC(deleteSch : DeleteSchRequest, callBack:Function):void {
       this.apiRequestService.sendDeleteRequest(this.SCHEDULE_API_URL, deleteSch, callBack, DisplayScheduleResponse.prototype);
     }

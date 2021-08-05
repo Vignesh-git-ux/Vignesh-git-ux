@@ -11,7 +11,7 @@ import {UserService} from './services/user/user.service';
 export class AppComponent {
 
     user !: User;
-    title = "Schedule Change Manager";
+    title = "Passenger Re-accom Manager";
 
     constructor(private userService : UserService) {
     }

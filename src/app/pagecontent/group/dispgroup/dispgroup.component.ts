@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DialogRole } from '@angular/material/dialog';
@@ -153,8 +154,9 @@ export class DispgroupComponent {
     }
     onTypeChange(selectedType: string) {
         this.scheduleService.IsAddSchedule = true;
-        this.router.navigate(['/scmlanding/disppsc']);
+        this.router.navigate(['/scmlanding/disppsc', { "GRPID": this.groupId, "VerNum": this.version, "active": this.group.Data[0].VERStatus }]);
     }
+
 }
 
 

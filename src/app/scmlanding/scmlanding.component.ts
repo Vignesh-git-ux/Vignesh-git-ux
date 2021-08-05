@@ -11,7 +11,7 @@ import { UserService } from '../services/user/user.service';
 })
 export class ScmlandingComponent implements OnInit, OnDestroy {
   
-  title = "Schedule Change Manager";
+  title = "Passenger Re-accom Manager";
   subscription : Subscription;
 
   public isVisibleMenu = "true";

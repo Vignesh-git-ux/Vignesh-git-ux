@@ -62,6 +62,7 @@ export class AirlineDetailsComponent implements OnInit {
   message: any;
 
   isDisabled = true;
+  isAdd = true;
 
   constructor(public formBuilder: FormBuilder, private scheduleService: ScheduleService,
     private calendar: NgbCalendar, private menuService: MenuService,
@@ -71,7 +72,8 @@ export class AirlineDetailsComponent implements OnInit {
     // this.message = data;
   }
   ngOnInit(): void {
-    this.isDisabled = !this.scheduleService.isAddSchedule;
+    this.isAdd = this.scheduleService.isAddSchedule;
+    this.isDisabled = !this.isAdd;
     this.flightForm = this.formBuilder.group({
       PSCAction: [{ value: '', disabled: this.isDisabled }],
       AirlineCC: [{ value: '', disabled: this.isDisabled }],
@@ -101,10 +103,10 @@ export class AirlineDetailsComponent implements OnInit {
     })
     if (!this.scheduleService.IsAddSchedule) {
       this.mapFormData(this.scheduleService.airlineScheduleData)
-      this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)
-      this.airlineDeiInfo = (this.scheduleService.airlineDeiInfo.Data)
-      this.constructSearchBarData()
     }
+    this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)
+    this.airlineDeiInfo = (this.scheduleService.airlineDeiInfo.Data)
+    this.constructSearchBarData()
     this.dropdownSettings = {
       singleSelection: false,
       selectAllText: 'Select All',
@@ -136,7 +138,7 @@ export class AirlineDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.dispModifyPSC()
+    this.dispPSC()
     this.menuService.displayMenu("true");
     window.history.back();
   }
@@ -230,23 +232,6 @@ export class AirlineDetailsComponent implements OnInit {
       EqpSerType: (typeof (apiData.EqpSerType) == "undefined" ? '' : apiData.EqpSerType)
     });
 
-
-    // this.segmentForm = this.formBuilder.group({
-    //   TimeMode: [''],
-    //   AircraftSTA: [''],
-    //   PaxSTA: [''],
-    //   DepTerminal: [''],
-    //   ArrTerminal: [''],
-    //   AircraftConfig: [''],
-    //   AircraftType: [''],
-    //   FreqRate: [''],
-    //   AircraftSTD: [''],
-    //   PaxSTD: [''],
-    //   deptimevarfromutc: [''],
-    //   arrtimevarfromutc: [''],
-    //   InFltAdj: [''],
-    //   EqpSerType: ['']
-    //     }) 
   }
 
   onItemSelect(item: any) {
@@ -301,7 +286,7 @@ export class AirlineDetailsComponent implements OnInit {
     console.log(this.DEITableData)
     // this.dropdownList = this.DEITableData.map((ele:any)=> ele.DEI)
   }
-  dispModifyPSC(): void {
+  dispPSC(): void {
     const pscItemNumber = this.scheduleService.pscItemNumber;
     console.log('pscItemNumber', pscItemNumber)
     let scheduleObj = this.setDataHeadersforMODPSC(this.scheduleService.airlineScheduleData)
@@ -315,9 +300,17 @@ export class AirlineDetailsComponent implements OnInit {
       ...scheduleObj
     }
     console.log('dTA', dataObject)
-    setTimeout(() => {
-      this.scheduleService.dispScheduleModify(pscItemNumber, dataObject, this.callBackPSC.bind(this));
-    }, 2000);
+    if (this.isAdd) {
+
+      setTimeout(() => {
+        this.scheduleService.dispScheduleAdd(pscItemNumber, dataObject, this.callBackPSC.bind(this));
+      }, 2000);
+    }
+    else {
+      setTimeout(() => {
+        this.scheduleService.dispScheduleModify(pscItemNumber, dataObject, this.callBackPSC.bind(this));
+      }, 2000);
+    }
   }
 
   callBackPSC(response: DisplayScheduleResponse): void {
@@ -373,5 +366,10 @@ export class AirlineDetailsComponent implements OnInit {
 
   closeSnackBar(): void {
     this.snackbarService.closeSnackBar();
+  }
+
+  ngOnDestroy() {
+    this.scheduleService.IsAddSchedule = false;
+    this.resetForm();
   }
 }
