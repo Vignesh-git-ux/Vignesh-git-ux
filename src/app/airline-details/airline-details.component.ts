@@ -104,7 +104,7 @@ export class AirlineDetailsComponent implements OnInit {
     if (!this.scheduleService.IsAddSchedule) {
       this.mapFormData(this.scheduleService.airlineScheduleData)
     }
-    this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)
+
     this.airlineDeiInfo = (this.scheduleService.airlineDeiInfo.Data)
     this.constructSearchBarData()
     this.dropdownSettings = {
@@ -115,6 +115,7 @@ export class AirlineDetailsComponent implements OnInit {
       limitSelection: 1,
       allowSearchFilter: true
     };
+    this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)
   }
   //ngOninit End
 
@@ -135,12 +136,6 @@ export class AirlineDetailsComponent implements OnInit {
   }
   getControl() {
     return this.flightForm.controls;
-  }
-
-  onSubmit() {
-    this.dispPSC()
-    this.menuService.displayMenu("true");
-    window.history.back();
   }
 
   async constructSearchBarData() {
@@ -286,6 +281,30 @@ export class AirlineDetailsComponent implements OnInit {
     console.log(this.DEITableData)
     // this.dropdownList = this.DEITableData.map((ele:any)=> ele.DEI)
   }
+
+  onSubmit() {
+    this.isAdd ? this.addPsc() : this.dispPSC();
+    this.menuService.displayMenu("true");
+   
+  }
+
+
+  addPsc(): void {
+    let DEIInformation = {
+      DEIInformation: this.DEITableData
+    }
+    let dataObject = {
+      ...this.flightForm.value,
+      ...this.segmentForm.value,
+      ...DEIInformation
+    }
+    console.log('dTA', dataObject)
+
+    setTimeout(() => {
+      this.scheduleService.dispScheduleAdd(dataObject, this.callBackPSC.bind(this));
+    }, 2000);
+  }
+
   dispPSC(): void {
     const pscItemNumber = this.scheduleService.pscItemNumber;
     console.log('pscItemNumber', pscItemNumber)
@@ -300,17 +319,9 @@ export class AirlineDetailsComponent implements OnInit {
       ...scheduleObj
     }
     console.log('dTA', dataObject)
-    if (this.isAdd) {
-
-      setTimeout(() => {
-        this.scheduleService.dispScheduleAdd(pscItemNumber, dataObject, this.callBackPSC.bind(this));
-      }, 2000);
-    }
-    else {
-      setTimeout(() => {
-        this.scheduleService.dispScheduleModify(pscItemNumber, dataObject, this.callBackPSC.bind(this));
-      }, 2000);
-    }
+    setTimeout(() => {
+      this.scheduleService.dispScheduleModify(pscItemNumber, dataObject, this.callBackPSC.bind(this));
+    }, 2000);
   }
 
   callBackPSC(response: DisplayScheduleResponse): void {
@@ -319,7 +330,7 @@ export class AirlineDetailsComponent implements OnInit {
     if (this.message !== "Success") {
       this.snackbarService.openSnackBar(ErrorComponent, this.message);
     }
-
+    window.history.back();
   }
 
 
@@ -370,6 +381,5 @@ export class AirlineDetailsComponent implements OnInit {
 
   ngOnDestroy() {
     this.scheduleService.IsAddSchedule = false;
-    this.resetForm();
   }
 }

@@ -11,10 +11,10 @@ export class ScheduleRequest extends RequestHeader {
     DutyCodeID !: string;
     PSCItemNumber !: string;
 
-    constructor(transactionType:string, pscItemNumber:string) {
+    constructor(transactionType: string, pscItemNumber: string) {
         super(transactionType);
         this.PSCItemNumber = pscItemNumber;
-    }   
+    }
 }
 
 export class fetchDEIScheduleRequest extends RequestHeader {
@@ -23,17 +23,17 @@ export class fetchDEIScheduleRequest extends RequestHeader {
     AgentID !: string;
     AgentSine !: string;
     AirportCode !: string;
-    DutyCodeID !: string;    
+    DutyCodeID !: string;
 
-    constructor(transactionType:string) {
-        super(transactionType);        
-    }   
+    constructor(transactionType: string) {
+        super(transactionType);
+    }
 }
 
 export class ModifyScheduleRequest extends RequestHeader {
 
-    GRPID!:string;
-    VER!:string;
+    GRPID!: string;
+    VER!: string;
     TransactionType !: string;
     AgentID !: string;
     AgentSine !: string;
@@ -41,12 +41,30 @@ export class ModifyScheduleRequest extends RequestHeader {
     DutyCodeID !: string;
     PSCID !: string;
 
-    constructor(transactionType:string, pscItemNumber:string,GRPID:string,VER:string) {
+    constructor(transactionType: string, pscItemNumber: string, GRPID: string, VER: string) {
         super(transactionType);
         this.PSCID = pscItemNumber;
         this.GRPID = GRPID;
         this.VER = VER;
-    }   
+    }
+}
+
+export class AddScheduleRequest extends RequestHeader {
+
+    GRPID!: string;
+    VER!: string;
+    TransactionType !: string;
+    AgentID !: string;
+    AgentSine !: string;
+    AirportCode !: string;
+    DutyCodeID !: string;
+    NumberOfItems: string = "";
+    constructor(transactionType: string, GRPID: string, VER: string, NumberOfItems: string) {
+        super(transactionType);
+        this.GRPID = GRPID;
+        this.VER = VER;
+        this.NumberOfItems = NumberOfItems;
+    }
 }
 
 
@@ -59,20 +77,20 @@ export class ScheduleResponse implements ResponseHeader {
     HDRResponseCode: string = "";
     ResponseText: string = "";
     TransactionType: string = "";
-    PSCItemNumber : string = "";
-    
-    public getGRPID() : string {
+    PSCItemNumber: string = "";
+
+    public getGRPID(): string {
         return this.PSCItemNumber.split("/")[0];
     }
-    public getVerNum() : string {
+    public getVerNum(): string {
         return this.PSCItemNumber.split("/")[1];
-    }   
+    }
 }
 
 export class ModifyScheduleResponse implements ResponseHeader {
 
-    GRPID:string="";
-    VER:string="";    
+    GRPID: string = "";
+    VER: string = "";
     AgentID: string = "";
     AgentSine: string = "";
     AirportCode: string = "";
@@ -80,8 +98,8 @@ export class ModifyScheduleResponse implements ResponseHeader {
     HDRResponseCode: string = "";
     ResponseText: string = "";
     TransactionType: string = "";
-    PSCItemNumber : string = "";
-    
+    PSCItemNumber: string = "";
+
     // public getGRPID() : string {
     //     return this.PSCItemNumber.split("/")[0];
     // }
@@ -90,30 +108,29 @@ export class ModifyScheduleResponse implements ResponseHeader {
     // }   
 }
 
-export class DelSchHeader extends RequestHeader   { 
+export class DelSchHeader extends RequestHeader {
 
-    GRPID : string = "" ;
-    VER : string = "";
-    NumberOfItems : string ="";
+    GRPID: string = "";
+    VER: string = "";
+    NumberOfItems: string = "";
 
-    constructor(transactionType:string, VER:string, GRPID:string, NumberOfItems:string) {
+    constructor(transactionType: string, VER: string, GRPID: string, NumberOfItems: string) {
         super(transactionType);
         this.VER = VER;
         this.GRPID = GRPID;
-        this.NumberOfItems=NumberOfItems;
+        this.NumberOfItems = NumberOfItems;
     }
 }
 
-export class DeleteSchRequest  {
-    
-    Header !: DelSchHeader;
-    Data : any;
+export class DeleteSchRequest {
 
-    constructor(Header : DelSchHeader, Data : any) {
-      
+    Header !: DelSchHeader;
+    Data: any;
+
+    constructor(Header: DelSchHeader, Data: any) {
+
         this.Header = Header;
         this.Data = Data;
-      }
+    }
 }
-  
-     
+

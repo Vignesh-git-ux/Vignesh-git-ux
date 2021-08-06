@@ -4,7 +4,7 @@
 
 <mat-card class="groupCard">
     <div class="grpDetail">
-        <div *ngIf = "!isAdd">
+        <div *ngIf="!isAdd">
             <span class="labelDtl">Group ID : </span>
             <span class="valueDtl">{{schedule && schedule.Header && schedule.Header.getGRPID()}} </span>
             <span class="copytoclipboard" data-toggle="tooltip" (click)="copyToClip($event)">
@@ -16,7 +16,7 @@
             <span class="labelDtl">Flight : </span>
             <span class="valueDtl">{{flightNumber}} </span>
         </div>
-        <div *ngIf = "isAdd">
+        <div *ngIf="isAdd">
             <span class="labelDtl">Group ID : </span>
             <span class="valueDtl">{{groupId}} </span>
             <span class="copytoclipboard" data-toggle="tooltip" (click)="copyToClip($event)">
@@ -190,7 +190,7 @@
     </table> -->
     <!-- //Airline details code Begin -->
     <div>
-        <app-airline-details></app-airline-details>
+        <app-airline-details *ngIf="(scheduleData && deiSchedule)||(isAdd && deiSchedule)"></app-airline-details>
     </div>
     <div *ngIf="!scheduleData"></div>
 

@@ -25,20 +25,14 @@ export class DispscheduleComponent implements OnInit {
     clipboard: any;
     groupId: any;
     version: any;
+    check: boolean = false;
 
     constructor(private route: ActivatedRoute, private router: Router,
         private scheduleService: ScheduleService, private menuService: MenuService,
         public formBuilder: FormBuilder, public flightform: FormsModule) {
         this.isAdd = this.scheduleService.IsAddSchedule;
-        if (this.isAdd) {
-            this.route.params.subscribe(params => {
-                this.groupId = params["GRPID"];
-                this.version = params["VerNum"];
-                this.activeGrp = params["active"];
-            });
-            this.dispDeiInfo()
-        }
-        else {
+        if (!this.isAdd) {
+
             this.menuService.displayMenu("false");
             this.route.params.subscribe(params => {
                 this.activeGrp = params["active"];
@@ -46,24 +40,36 @@ export class DispscheduleComponent implements OnInit {
             });
             this.dispDeiInfo()
         }
+        else {
+            this.route.params.subscribe(params => {
+                this.groupId = params["GRPID"];
+                this.version = params["VerNum"];
+                this.activeGrp = params["active"];
+                this.scheduleService.grouppId = this.groupId;
+                this.scheduleService.version = this.version;
+            });
+            this.dispDeiInfo()
+        }
 
-     
+
     }
 
     dispPSC(pscItemNumber: string): void {
         this.scheduleService.pscItemNumber = pscItemNumber
-        this.scheduleService.dispSchedule(pscItemNumber, this.callBackPSC.bind(this));
+        this.scheduleService.dispSchedule(pscItemNumber, this.callBackPSC.bind(this)
+        )
     }
 
     dispDeiInfo(): void {
         this.scheduleService.fetchDeiInfo(this.callBackDeiInfo.bind(this))
     }
 
-    callBackPSC(response: DisplayScheduleResponse): void {
+    callBackPSC(response: DisplayScheduleResponse) {
         this.schedule = response;
         this.scheduleData = response.Data[0][0];
         this.scheduleService.airlineScheduleData = this.scheduleData;
         this.flightNumber = this.scheduleData.AirlineCC + ' ' + this.scheduleData.FltNum;
+
     }
 
     callBackDeiInfo(response: DisplayModifyScheduleResponse): void {
