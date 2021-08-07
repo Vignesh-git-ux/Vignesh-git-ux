@@ -115,7 +115,9 @@ export class AirlineDetailsComponent implements OnInit {
       limitSelection: 1,
       allowSearchFilter: true
     };
-    this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)
+    if (!this.isAdd) {
+      this.setDEIInfotoTable(this.scheduleService.airlineScheduleData.DEIInformation)
+    }
   }
   //ngOninit End
 
@@ -285,7 +287,7 @@ export class AirlineDetailsComponent implements OnInit {
   onSubmit() {
     this.isAdd ? this.addPsc() : this.dispPSC();
     this.menuService.displayMenu("true");
-   
+
   }
 
 

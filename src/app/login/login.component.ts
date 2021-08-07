@@ -83,6 +83,7 @@ export class LoginComponent implements OnInit {
               localStorage.setItem('refreshToken',JSON.stringify(refreshToken))
               localStorage.setItem('userData',JSON.stringify(userData))
               localStorage.setItem('lastAuthUser',JSON.stringify(lastAuthUser))
+              this.router.navigate(['/scmlanding']);
               // localStorage.clear()
             }
           });
@@ -95,7 +96,7 @@ export class LoginComponent implements OnInit {
         if (user.HDRResponseCode === "000") {
             
             user.setUser();
-            this.router.navigate(['/scmlanding']);
+          
         } else {
           this.invalid = true;
           this.errorMsg = user.ResponseText;
