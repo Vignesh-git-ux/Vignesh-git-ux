@@ -31,9 +31,9 @@ export class DispscheduleComponent implements OnInit {
         private scheduleService: ScheduleService, private menuService: MenuService,
         public formBuilder: FormBuilder, public flightform: FormsModule) {
         this.isAdd = this.scheduleService.IsAddSchedule;
+        this.menuService.displayMenu("false");
         if (!this.isAdd) {
 
-            this.menuService.displayMenu("false");
             this.route.params.subscribe(params => {
                 this.activeGrp = params["active"];
                 this.dispPSC(params["PSCItemNumber"])
