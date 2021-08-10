@@ -51,6 +51,7 @@ export class DisplayScheduleData  {
     ModAgntSine: any;
     ModDteTime: any;
     ModAgntAirport!: string;
+    ResponseText!: string;
 
     getTimeFormat(number:string) : string {
         if (number) {

@@ -19,6 +19,17 @@ export class SnackbarService {
         });
     }
 
+    openSuccessSnackBar(component : any, message : string) {
+
+        this.snackBar.openFromComponent(component, {
+            duration: undefined,
+            verticalPosition: "top", 
+            horizontalPosition : "right",
+            panelClass : "successSnackbar",
+            data : message
+        });
+    }
+
     closeSnackBar() : void {
         this.snackBar.dismiss();
     }

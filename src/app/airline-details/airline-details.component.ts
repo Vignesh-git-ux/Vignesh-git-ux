@@ -332,6 +332,9 @@ export class AirlineDetailsComponent implements OnInit {
     if (this.message !== "Success") {
       this.snackbarService.openSnackBar(ErrorComponent, this.message);
     }
+    else {
+      this.snackbarService.openSuccessSnackBar(ErrorComponent, this.message);
+    }
     window.history.back();
   }
 
