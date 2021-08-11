@@ -1,5 +1,5 @@
 <div class="grpTitle">
-    <span (click)="cancel()" class="dispGrpSpan">Display Group </span> > Display Schedule
+    <span (click)="cancel()" class="dispGrpSpan">Display Group </span>  <span *ngIf="isAdd"> > Add Schedule</span><span *ngIf="!isAdd"> > Display Schedule</span>
 </div>
 
 <mat-card class="groupCard">

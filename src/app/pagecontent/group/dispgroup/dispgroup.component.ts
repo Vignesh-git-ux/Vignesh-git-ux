@@ -86,7 +86,7 @@ export class DispgroupComponent {
     callBackGroup(grp: DisplayGroupresponse) {
 
         if (!this.deleteMode) {
-            this.snackbarService.closeSnackBar();
+           // this.snackbarService.closeSnackBar();
         }
         if (grp.Header.ResponseText != "SUCCESS") {
             this.snackbarService.openSnackBar(ErrorComponent, grp.Header.ResponseText);
@@ -104,7 +104,7 @@ export class DispgroupComponent {
     displaySchedules(): void {
 
         if (!this.deleteMode) {
-            this.snackbarService.closeSnackBar();
+            //this.snackbarService.closeSnackBar();
         }
         if (this.group.Data && this.group.Data.length > 0) {
 
@@ -142,7 +142,7 @@ export class DispgroupComponent {
 
     callBackDelPSC(resp: DisplayScheduleResponse): void {
 
-        this.snackbarService.closeSnackBar();
+        // this.snackbarService.closeSnackBar();
         if (resp.Header.ResponseText != "Success") {
             this.snackbarService.openSnackBar(ErrorComponent, resp.Header.ResponseText);
             return;

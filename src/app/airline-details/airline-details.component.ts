@@ -380,9 +380,9 @@ export class AirlineDetailsComponent implements OnInit {
     return extraObj
   }
 
-  closeSnackBar(): void {
-    this.snackbarService.closeSnackBar();
-  }
+  // closeSnackBar(): void {
+  //   this.snackbarService.closeSnackBar();
+  // }
 
   ngOnDestroy() {
     this.scheduleService.IsAddSchedule = false;

@@ -65,7 +65,7 @@ export class CreategroupComponent {
   
     callBackAgtGroup(group:AgentGroupresponse): void {
 
-        this.snackbarService.closeSnackBar();
+     //   this.snackbarService.closeSnackBar();
         if (group.Header.ResponseText != "SUCCESS") {
             this.snackbarService.openSnackBar(ErrorComponent, group.Header.ResponseText);
             return;
@@ -105,7 +105,7 @@ export class CreategroupComponent {
   
     callBackGroup(resp:GroupResponse): void {
         
-        this.snackbarService.closeSnackBar();
+      //  this.snackbarService.closeSnackBar();
         if (resp.ResponseText != "SUCCESS") {
             this.snackbarService.openSnackBar(ErrorComponent, resp.ResponseText);
             return;
