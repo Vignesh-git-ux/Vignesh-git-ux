@@ -189,3 +189,28 @@ td {
     padding-top: 10px;
     padding-left: 20px;
 }
+.menu {
+    border-radius: 20px;
+    color: white;
+    font-size: 18px;
+    font-family: "Lato";
+    background-color: #0361aa;
+    width: 150px;
+    border: none;
+    height: 30px;
+    display: inline-flex;
+    outline: none;
+    margin: 0.5px;
+    padding-top: 5px;
+}
+
+.submenu {
+    color: #000000;
+    font-size: 16px;
+    font-family: "Lato";
+    background-color: #ffffff;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}

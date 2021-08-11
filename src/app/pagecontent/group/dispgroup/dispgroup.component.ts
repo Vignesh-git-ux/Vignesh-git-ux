@@ -152,7 +152,7 @@ export class DispgroupComponent {
         this.deleteMode = true;
         this.dispGroup();
     }
-    onTypeChange(selectedType: string) {
+    onTypeChange() {
         this.scheduleService.IsAddSchedule = true;
         this.router.navigate(['/scmlanding/disppsc', { "GRPID": this.groupId, "VerNum": this.version, "active": this.group.Data[0].VERStatus }]);
     }
