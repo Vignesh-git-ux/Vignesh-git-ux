@@ -110,6 +110,9 @@ export class CreategroupComponent {
             this.snackbarService.openSnackBar(ErrorComponent, resp.ResponseText);
             return;
         }
+        else{
+            this.snackbarService.openSuccessSnackBar(ErrorComponent, "SUCCESS");
+        }
         
         this.getGroups();
     }

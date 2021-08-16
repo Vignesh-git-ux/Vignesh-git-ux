@@ -81,12 +81,13 @@ export class DispgroupComponent {
 
     dispGroup(): void {
         this.groupService.dispGroup(this.groupId, this.version, this.callBackGroup.bind(this));
+
     }
 
     callBackGroup(grp: DisplayGroupresponse) {
 
         if (!this.deleteMode) {
-           // this.snackbarService.closeSnackBar();
+            // this.snackbarService.closeSnackBar();
         }
         if (grp.Header.ResponseText != "SUCCESS") {
             this.snackbarService.openSnackBar(ErrorComponent, grp.Header.ResponseText);
@@ -150,6 +151,7 @@ export class DispgroupComponent {
 
         this.snackbarService.openSnackBar(ErrorComponent, "Schedule deleted Successfully");
         this.deleteMode = true;
+        window.location.reload();
         this.dispGroup();
     }
     onTypeChange() {
