@@ -11,10 +11,13 @@ import { MenuService } from '../services/menus/menu.service';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { ErrorComponent } from '../error/error/error.component';
+import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 @Component({
   selector: 'app-airline-details',
   templateUrl: './airline-details.component.html',
-  styleUrls: ['./airline-details.component.scss']
+  styleUrls: ['./airline-details.component.scss'],
+  providers: [DatePipe]
 })
 export class AirlineDetailsComponent implements OnInit {
 
@@ -67,6 +70,7 @@ export class AirlineDetailsComponent implements OnInit {
   constructor(public formBuilder: FormBuilder, private scheduleService: ScheduleService,
     private calendar: NgbCalendar, private menuService: MenuService,
     private snackbarService: SnackbarService,
+    private datePipe: DatePipe
   ) {
 
     // this.message = data;
@@ -201,6 +205,11 @@ export class AirlineDetailsComponent implements OnInit {
 
   mapFormData(apiData: any) {
     // console.log('apiData',apiData)
+    let SchEffDate = moment(apiData.SchDisDate).format('yyyy-MM-DD');
+    let SchDisDate = moment(apiData.SchDisDate).format('yyyy-MM-DD');
+    apiData.SchEffDate = this.datePipe.transform(SchEffDate, 'yyyy-MM-dd');
+    apiData.SchDisDate = this.datePipe.transform(SchDisDate, 'yyyy-MM-dd');
+    console.log(apiData.SchEffDate);
     this.flightForm.setValue({
       PSCAction: (typeof (apiData.PSCAction) == "undefined" ? '' : apiData.PSCAction),
       AirlineCC: (typeof (apiData.AirlineCC) == "undefined" ? '' : apiData.AirlineCC),
@@ -295,11 +304,15 @@ export class AirlineDetailsComponent implements OnInit {
     let DEIInformation = {
       DEIInformation: this.DEITableData
     }
+    this.flightForm.controls.SchEffDate = this.flightForm.controls.SchEffDate.value.split("-");
     let dataObject = {
       ...this.flightForm.value,
       ...this.segmentForm.value,
       ...DEIInformation
     }
+
+    dataObject.SchEffDate = dataObject.SchEffDate.split("-").join('');
+    dataObject.SchDisDate = dataObject.SchEffDate.split("-").join('');
     console.log('dTA', dataObject)
 
     setTimeout(() => {
@@ -320,16 +333,19 @@ export class AirlineDetailsComponent implements OnInit {
       ...DEIInformation,
       ...scheduleObj
     }
+    dataObject.SchEffDate = dataObject.SchEffDate.split("-").join('');
+    dataObject.SchDisDate = dataObject.SchEffDate.split("-").join('');
     console.log('dTA', dataObject)
     setTimeout(() => {
       this.scheduleService.dispScheduleModify(pscItemNumber, dataObject, this.callBackPSC.bind(this));
     }, 2000);
   }
 
-  callBackPSC(response: DisplayScheduleResponse): void {
+  callBackPSC(response: any): void {
     this.schedule = response;
-    this.message = this.schedule.Header.ResponseText
+    this.message = this.schedule.Header.ResponseText;
     if (this.message !== "Success") {
+      this.message = this.message + " " + response.Data[0]?.ResponseText;
       this.snackbarService.openSnackBar(ErrorComponent, this.message);
     }
     else {

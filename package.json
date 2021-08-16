@@ -32,6 +32,7 @@
     "lato-font": "^3.0.0",
     "material-design-icons": "^3.0.1",
     "material-design-icons-iconfont": "^6.1.0",
+    "moment": "^2.29.1",
     "ng-click-outside": "^8.0.0",
     "ng-multiselect-dropdown": "^0.3.4",
     "rxjs": "~6.6.0",
