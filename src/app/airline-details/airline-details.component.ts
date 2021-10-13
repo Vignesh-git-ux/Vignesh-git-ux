@@ -345,7 +345,9 @@ export class AirlineDetailsComponent implements OnInit {
     this.schedule = response;
     this.message = this.schedule.Header.ResponseText;
     if (this.message !== "Success") {
-      this.message = this.message + " " + response.Data[0]?.ResponseText;
+      if (response.Data) {
+        this.message = this.message + " " + response.Data[0].ResponseText;
+      }
       this.snackbarService.openSnackBar(ErrorComponent, this.message);
     }
     else {

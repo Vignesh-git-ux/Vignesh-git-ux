@@ -1,81 +1,81 @@
 <mat-card class="groupCard">
 
-<mat-toolbar-row class="grpTitle">
-    <span *ngIf="param == 'MY'">My Groups</span>
-    <span *ngIf="param == 'ALL'">All Groups</span>
-    <span class="example-spacer"></span>
+    <mat-toolbar-row class="grpTitle">
+        <span *ngIf="param == 'MY'">My Groups</span>
+        <span *ngIf="param == 'ALL'">All Groups</span>
+        <span class="example-spacer"></span>
 
-    <div class="formfield">
-        <input [formControl]="grpFilter" id="grpFilter" type="text" placeholder="Search">
-        <span class="material-icons">search</span>
-    </div>
-    
-    <button class="createBtn" (click)="createNewGroup()">
+        <div class="formfield">
+            <input [formControl]="grpFilter" id="grpFilter" type="text" placeholder="Search">
+            <span class="material-icons">search</span>
+        </div>
 
-        <div class="">Create &nbsp;</div>
-        <span class="material-icons">add_circle_outline</span>
+        <button class="createBtn" (click)="createNewGroup()">
 
-    </button>
-</mat-toolbar-row>
+            <div class="">Create &nbsp;</div>
+            <span class="material-icons">add_circle_outline</span>
+
+        </button>
+    </mat-toolbar-row>
 
     <div class="table_div">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 grpTable">
 
-        <ng-container matColumnDef="Status">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
-                <div class="grpIndex" [class.activeGrp]="element.getGrpIndex() == '1'">&nbsp;</div>
-            </td>
-        </ng-container>
+            <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="grpIndex" [class.activeGrp]="element.getGrpIndex() == '1'">&nbsp;</div>
+                </td>
+            </ng-container>
 
-        <!-- Group Id Column -->
-        <ng-container matColumnDef="GRPID">
-            <th mat-header-cell *matHeaderCellDef>  
-                Group
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.getGRPID()}} </td>
-        </ng-container>
+            <!-- Group Id Column -->
+            <ng-container matColumnDef="GRPID">
+                <th mat-header-cell *matHeaderCellDef>
+                    Group
+                </th>
+                <td mat-cell *matCellDef="let element"> {{element.getGRPID()}} </td>
+            </ng-container>
 
-        <!-- Version Column -->
-        <ng-container matColumnDef="VerNum">
-            <th mat-header-cell *matHeaderCellDef> Version </th>
-            <td mat-cell *matCellDef="let element"> {{element.VerNum}} </td>
-        </ng-container>
+            <!-- Version Column -->
+            <ng-container matColumnDef="VerNum">
+                <th mat-header-cell *matHeaderCellDef> Version </th>
+                <td mat-cell *matCellDef="let element"> {{element.VerNum}} </td>
+            </ng-container>
 
-        <!-- Created By Column -->
-        <ng-container matColumnDef="CreatedBy">
-            <th mat-header-cell *matHeaderCellDef> Created By </th>
-            <td mat-cell *matCellDef="let element"> {{element.CreAgntID}} </td>
-        </ng-container>
+            <!-- Created By Column -->
+            <ng-container matColumnDef="CreatedBy">
+                <th mat-header-cell *matHeaderCellDef> Created By </th>
+                <td mat-cell *matCellDef="let element"> {{element.CreAgntID}} </td>
+            </ng-container>
 
-        <!-- Created Time Column -->
-        <ng-container matColumnDef="CreDteTime">
-            <th mat-header-cell *matHeaderCellDef> Created Time </th>
-            <td mat-cell *matCellDef="let element"> {{element.CreDteTime}} </td>
-        </ng-container>
+            <!-- Created Time Column -->
+            <ng-container matColumnDef="CreDteTime">
+                <th mat-header-cell *matHeaderCellDef> Created Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.CreDteTime}} </td>
+            </ng-container>
 
-        <!-- Modified By Column -->
-        <ng-container matColumnDef="ModifiedBy">
-            <th mat-header-cell *matHeaderCellDef>Modified By </th>
-            <td mat-cell *matCellDef="let element"> {{element.ModAgntID}} </td>
-        </ng-container>
-        <!-- Modified Time Column -->
-        <ng-container matColumnDef="ModifiedTime">
-            <th mat-header-cell *matHeaderCellDef>Modified Time </th>
-            <td mat-cell *matCellDef="let element">{{element.ModDteTime}} </td>
-        </ng-container>
-        <ng-container matColumnDef="initBtn">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element">
-                <button class="initBtn" (click)="initGroup(element)">
-                    <span class="material-icons">add_circle</span>
-                    &nbsp;<div class="">Init</div>
-                </button>
-            </td>
-        </ng-container>
+            <!-- Modified By Column -->
+            <ng-container matColumnDef="ModifiedBy">
+                <th mat-header-cell *matHeaderCellDef>Modified By </th>
+                <td mat-cell *matCellDef="let element"> {{element.ModAgntID}} </td>
+            </ng-container>
+            <!-- Modified Time Column -->
+            <ng-container matColumnDef="ModifiedTime">
+                <th mat-header-cell *matHeaderCellDef>Modified Time </th>
+                <td mat-cell *matCellDef="let element">{{element.ModDteTime}} </td>
+            </ng-container>
+            <ng-container matColumnDef="initBtn">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="initBtn" [class.disInitGrp]="element.getGrpIndex() == '0'" [disabled]="element.getGrpIndex() == '0'" (click)="initGroup(element)">
+                        <span class="material-icons">add_circle</span>
+                        &nbsp;<div class="">Init</div>
+                    </button>
+                </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (dblclick)="dispGroup(row)"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky : true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (dblclick)="dispGroup(row)"></tr>
         </table>
     </div>
 </mat-card>
